@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="Yi&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/Burpsuite/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/BurpSuite/index.html">
 <meta property="og:site_name" content="Yi&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yi">
@@ -206,6 +206,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
     <!-- 百度统计  -->
     
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?50cd99f35c856a841abf8a72f40c45cf";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
     <!-- 谷歌统计  -->
     
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -354,24 +364,18 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/24/BurpSuite-localhost-data/" >
+        <a class="abstract-title" href = "/2020/04/25/Burpsuite-Pro-Install/" >
             
-                <span>BurpSuite无法抓取本地包的解决方案</span>
+                <span>Burpsuite Pro 2.1.05 破解版安装教程</span>
         </a>
         <div class="abstract-content">
-            本地电脑系统是Mac OS Catalina 10.15.4，用Chrome、火狐都不能抓部署在本地的网站的包，可能是本机系统有设置代理时过滤”127.0.0.1”和”localhost”。
-解决方案：
-
-确保配置浏览器代理时，去掉勾选”过滤本机IP地址“选项。
-可以使用本机IP（192.168.xxx.xxx）代替“127.0.0.1”访问页面。
-另一种方法：可以修改本地hosts文件，将本机IP指向“127.0.0.1”或者绑定一个域名到“127.0.0.1”也可以解决。
-
-
+            <h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><p>本机系统是 <em>Kali Linux 64-Bit 2020.1b</em>，Burpsuite Pro 版本为 2.1.05。此处的Keygen用的是吾爱破解论坛提供无后门安全版本：</p>
+<p>Burp Suite Pro Loader&amp;Keygen By surferxyz（附带v1.7.31原版）<a href="https://www.52pojie.cn/thread-691448-1-1.html" target="_blank" rel="noopener">地址</a></p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/24</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/25</span>
             </div>
             <!-- tags  -->
             
@@ -379,7 +383,42 @@
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Burpsuite">Burpsuite</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "BurpSuite">BurpSuite</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/04/25/Burpsuite-notes/" >
+            
+                <span>BurpSuite入门笔记</span>
+        </a>
+        <div class="abstract-content">
+            Spider网站爬行顺序：Proxy抓取请求 -&gt; 发送到Repeater -&gt; 发送到Spider -&gt; 开始爬取网站 -&gt; 在Target中可查看结果。
+爬行网站线程数可以设置为2-10，大型网站可以更多。
+Scanner漏洞扫描，在扫描之前需要做一个Spider。
+roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选择Active scan this host -&gt; Do an active scan。
+参考资料burp suite超级详解Burp Suite渗透操作指南–暴力破解Burp Suite渗...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/25</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "BurpSuite">BurpSuite</a>
     
 </div>
             
@@ -419,6 +458,13 @@
     </div>
     <!-- 不蒜子  -->
     
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">Page View: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
 </footer>
     </div>
     <!-- toc -->
@@ -433,8 +479,6 @@
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     
@@ -808,15 +852,15 @@
     
         <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
     
-        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
-    
         <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
-        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
-    
         <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
@@ -889,52 +933,7 @@ jsonContent:
     
     <!-- busuanzi  -->
     
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-     
-    </body>
-</html>
-
-
-tegories: true
-    tags: true</pre>
-    </div> 
-    <div class="sidebar-tags-list"></div>
-</div>
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
-    
-        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-    </div>
-</div> 
-    <script>
-    var siteMeta = {
-        root: "/",
-        author: "Yi"
-    }
-</script>
-    <!-- CDN failover -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ === 'undefined')
-        {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
-        }
-    </script>
-    <script src="/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     
     <!-- CNZZ  -->
     
