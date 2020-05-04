@@ -377,6 +377,49 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/04/27/DVWA-SQL-Notes/" >
+            
+                <span>基于DVWA的SQL联合查询注入学习笔记</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="联合查询注入基本流程"><a href="#联合查询注入基本流程" class="headerlink" title="联合查询注入基本流程"></a>联合查询注入基本流程</h2><ol>
+<li><p>判断是否存在注入（数字型还是字符型）</p>
+<ol>
+<li><p>单引号法：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑法：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">and 1=1</span><br><span class="line">and 1=2</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>1</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运算法</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-1</span><br><span class="line">-0</span><br></pre></td></tr></table></figure>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/04/25/Useragent-book/" >
             
                 <span>浏览器User-Agent整理</span>
@@ -674,43 +717,6 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
         <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
-            
-                <span>HTTP协议学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="HTTP与HTTPS"><a href="#HTTP与HTTPS" class="headerlink" title="HTTP与HTTPS"></a>HTTP与HTTPS</h2><p>HTTP = HTTP + SSL。HTTPS在HTTP应用层的基础上使用安全套接字层作为子层。</p>
-<p>主要区别：</p>
-<ul>
-<li>HTTP标准端口是80，而HTTPS的标准端口是443。</li>
-<li>若不做任何处理，HTTP协议可以直接抓包，HTTPS则不行。</li>
-<li>在OSI网络模型中，HTTP工作与应用层，而HTTPS在传输层。</li>
-<li>HTTP 无需加密，而 HTTPS 对传输的数据进行加密。</li>
-<li>HTTP 无需证书，而 HTTPS 需要认证证书（SSL证书）。</li>
-</ul>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
     
 </div>
             
@@ -1062,9 +1068,24 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 21
+        Total : 22
         </div>
         <!-- search  -->
         
@@ -1077,6 +1098,11 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2020/05/04/sqli-labs-notes/" >Sqli-labs 通关笔记 (持续更新)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1196,9 +1222,9 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
-        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
-    
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     

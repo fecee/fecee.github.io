@@ -364,6 +364,49 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/04/27/DVWA-SQL-Notes/" >
+            
+                <span>基于DVWA的SQL联合查询注入学习笔记</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="联合查询注入基本流程"><a href="#联合查询注入基本流程" class="headerlink" title="联合查询注入基本流程"></a>联合查询注入基本流程</h2><ol>
+<li><p>判断是否存在注入（数字型还是字符型）</p>
+<ol>
+<li><p>单引号法：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑法：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">and 1=1</span><br><span class="line">and 1=2</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>1</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运算法</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-1</span><br><span class="line">-0</span><br></pre></td></tr></table></figure>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/04/25/Burpsuite-Pro-Install/" >
             
                 <span>Burpsuite Pro 2.1.05 破解版安装教程</span>
@@ -662,42 +705,6 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >
-            
-                <span>PHP入门笔记1</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
-<li><p>PHP 语句以分号结尾（;）。PHP 代码块的关闭标签也会自动表明分号（因此在 PHP 代码块的最后一行不必使用分号）。</p>
-</li>
-<li><p>在 PHP 中，所有用户定义的函数、类和关键词（例如 if、else、echo 等等）都对大小写不敏感；不过在 PHP 中，所有变量都对大小写敏感。</p>
-</li>
-</ul>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web基础">Web基础</a>
     
 </div>
             
@@ -1007,9 +1014,24 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 21
+        Total : 22
         </div>
         <!-- search  -->
         
@@ -1022,6 +1044,11 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2020/05/04/sqli-labs-notes/" >Sqli-labs 通关笔记 (持续更新)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1141,9 +1168,9 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
-        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
-    
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
