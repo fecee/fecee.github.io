@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Yi">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Yi">
+    
+    <meta name="keywords" content="Yi's Blog,Yi">
+    
+    <meta name="description" content="">
+    <meta name="description" content="基本语法 PHP 语句以分号结尾（;）。PHP 代码块的关闭标签也会自动表明分号（因此在 PHP 代码块的最后一行不必使用分号）。  在 PHP 中，所有用户定义的函数、类和关键词（例如 if、else、echo 等等）都对大小写不敏感；不过在 PHP 中，所有变量都对大小写敏感。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP入门笔记1">
+<meta property="og:url" content="http://yoursite.com/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Yi&#39;s Blog">
+<meta property="og:description" content="基本语法 PHP 语句以分号结尾（;）。PHP 代码块的关闭标签也会自动表明分号（因此在 PHP 代码块的最后一行不必使用分号）。  在 PHP 中，所有用户定义的函数、类和关键词（例如 if、else、echo 等等）都对大小写不敏感；不过在 PHP 中，所有变量都对大小写敏感。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-22T05:59:49.000Z">
+<meta property="article:modified_time" content="2020-04-23T14:56:01.000Z">
+<meta property="article:author" content="Yi">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Web基础">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>PHP入门笔记1 · Yi&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/null" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+    
+        <body class="post-body">
+    
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Yi&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">PHP入门笔记1</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Yi's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/egan-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            PHP入门笔记1
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web基础">Web基础</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">3.1k</span>Reading time: <span class="post-count reading-time">12 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/04/22</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
+<li><p>PHP 语句以分号结尾（;）。PHP 代码块的关闭标签也会自动表明分号（因此在 PHP 代码块的最后一行不必使用分号）。</p>
+</li>
+<li><p>在 PHP 中，所有用户定义的函数、类和关键词（例如 if、else、echo 等等）都对大小写不敏感；不过在 PHP 中，所有变量都对大小写敏感。</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><ul>
+<li><p>PHP 变量规则：</p>
+<ul>
+<li><p>变量以 $ 符号开头，其后是变量的名称</p>
+</li>
+<li><p>变量名称对大小写敏感（$y 与 $Y 是两个不同的变量）</p>
+</li>
+</ul>
+</li>
+<li><p>PHP global 关键词用于在函数内访问全局变量。要做到这一点，请在（函数内部）变量前面使用 global 关键词.</p>
+</li>
+</ul>
+<h3 id="echo-amp-print"><a href="#echo-amp-print" class="headerlink" title="echo &amp; print"></a>echo &amp; print</h3><p>echo 比 print 稍快，因为它不返回任何值，print始终返回1。</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li><p>字符串可以是引号内的任何文本，可以使用单引号或双引号。</p>
+</li>
+<li><p><code>var_dump()</code> 会返回变量的数据类型和值。</p>
+</li>
+<li><p>对象是存储数据和有关如何处理数据的信息的数据类型。在 PHP 中，必须明确地声明对象。首先我们必须声明对象的类。对此，我们使用 <code>class</code> 关键词。类是包含属性和方法的结构。然后我们在对象类中定义数据类型，然后在该类的实例中使用此数据类型。</p>
+</li>
+<li><p>特殊的 NULL 值表示变量无值。NULL 是数据类型 NULL 唯一可能的值。NULL 值标示变量是否为空。也用于区分空字符串与空值数据库。可以通过把值设置为 NULL，将变量清空。</p>
+</li>
+</ul>
+<h3 id="PHP-字符串函数"><a href="#PHP-字符串函数" class="headerlink" title="PHP 字符串函数"></a>PHP 字符串函数</h3><ul>
+<li><p><code>strlen()</code> 函数返回字符串的长度，以字符计。</p>
+</li>
+<li><p><code>str_word_count()</code> 函数对字符串中的单词进行计数。</p>
+</li>
+<li><p><code>strrev()</code> 函数反转字符串。</p>
+</li>
+<li><p><code>strpos()</code> 用于检索字符串内指定的字符或文本。如果找到匹配，则会返回首个匹配的字符位置。如果未找到匹配，则将返回 FALSE。注：<em>字符串中首字符的位置是 0 而不是 1</em>。</p>
+</li>
+<li><p><code>str_replace()</code> 用一些字符串替换字符串中的另一些字符。</p>
+</li>
+</ul>
+<h3 id="设置-PHP-常量"><a href="#设置-PHP-常量" class="headerlink" title="设置 PHP 常量"></a>设置 PHP 常量</h3><p>如需设置常量，使用 <code>define()</code> 函数 - 它使用三个参数：</p>
+<ol>
+<li>首个参数定义常量的名称</li>
+<li>第二个参数定义常量的值</li>
+<li>可选的第三个参数规定常量名是否对大小写[<strong>不敏感</strong>]。默认是 false。</li>
+</ol>
+<p>常量是自动全局的，而且可以贯穿整个脚本使用。</p>
+<h3 id="PHP-字符串运算符"><a href="#PHP-字符串运算符" class="headerlink" title="PHP 字符串运算符*"></a>PHP 字符串运算符*</h3><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>名称</th>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.</td>
+<td>串接</td>
+<td><code>$txt1 = &quot;Hello&quot; $txt2 = $txt1 . &quot; world!&quot;</code></td>
+<td><code>$txt2</code> 包含 <code>&quot;Hello world!&quot;</code></td>
+</tr>
+<tr>
+<td>.=</td>
+<td>串接赋值</td>
+<td><code>$txt1 = &quot;Hello&quot; $txt1 .= &quot; world!&quot;</code></td>
+<td><code>$txt1</code> 包含 <code>&quot;Hello world!&quot;</code></td>
+</tr>
+</tbody></table>
+<h3 id="PHP-比较运算符"><a href="#PHP-比较运算符" class="headerlink" title="PHP 比较运算符"></a>PHP 比较运算符</h3><ul>
+<li><p><code>===</code>: 全等（完全相同），如果 $x 等于 $y，且它们类型相同，则返回 true。</p>
+</li>
+<li><p><code>!==</code>: 不全等（完全不同），如果 $x 不等于 $y，或它们类型不相同，则返回 true。</p>
+</li>
+<li><p><code>17==&#39;17&#39;, 17 !== &#39;17&#39;</code></p>
+</li>
+</ul>
+<h3 id="PHP-foreach-循环"><a href="#PHP-foreach-循环" class="headerlink" title="PHP foreach 循环"></a>PHP foreach 循环</h3><p><code>foreach</code> 循环只适用于数组，并用于遍历数组中的每个键/值对。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span> ($array <span class="keyword">as</span> $value) &#123;</span><br><span class="line">  code to be executed;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$colors = <span class="keyword">array</span>(<span class="string">"red"</span>,<span class="string">"green"</span>,<span class="string">"blue"</span>,<span class="string">"yellow"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($colors <span class="keyword">as</span> $value) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"$value &lt;br&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-数组"><a href="#PHP-数组" class="headerlink" title="PHP 数组"></a>PHP 数组</h3><p>在 PHP 中，有三种数组类型：</p>
+<ul>
+<li><strong>索引数组</strong> - 带有数字索引的数组。</li>
+<li><strong>关联数组</strong> - 带有指定键的数组。</li>
+<li><strong>多维数组</strong> - 包含一个或多个数组的数组。</li>
+</ul>
+<h3 id="索引数组"><a href="#索引数组" class="headerlink" title="索引数组"></a>索引数组</h3><p><code>count()</code> 函数用于返回数组的长度（元素数）。</p>
+<h3 id="关联数组"><a href="#关联数组" class="headerlink" title="关联数组"></a>关联数组</h3><p>关联数组是使用您分配给数组的指定键的数组。有两种创建关联数组的方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$age=<span class="keyword">array</span>(<span class="string">"Bill"</span>=&gt;<span class="string">"35"</span>,<span class="string">"Steve"</span>=&gt;<span class="string">"37"</span>,<span class="string">"Elon"</span>=&gt;<span class="string">"43"</span>);</span><br><span class="line"></span><br><span class="line">$age[<span class="string">'Bill'</span>]=<span class="string">"63"</span>;</span><br><span class="line">$age[<span class="string">'Steve'</span>]=<span class="string">"56"</span>;</span><br><span class="line">$age[<span class="string">'Elon'</span>]=<span class="string">"47"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>遍历关联数组:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$age=<span class="keyword">array</span>(<span class="string">"Bill"</span>=&gt;<span class="string">"63"</span>,<span class="string">"Steve"</span>=&gt;<span class="string">"56"</span>,<span class="string">"Elon"</span>=&gt;<span class="string">"47"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>($age <span class="keyword">as</span> $x=&gt;$x_value) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"Key="</span> . $x . <span class="string">", Value="</span> . $x_value;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数组的排序函数"><a href="#数组的排序函数" class="headerlink" title="数组的排序函数"></a>数组的排序函数</h3><ul>
+<li><code>sort()</code> - 以升序对数组排序</li>
+<li><code>rsort()</code> - 以降序对数组排序</li>
+<li><code>asort()</code> - 根据值，以升序对关联数组进行排序</li>
+<li><code>ksort()</code> - 根据键，以升序对关联数组进行排序</li>
+<li><code>arsort()</code> - 根据值，以降序对关联数组进行排序</li>
+<li><code>krsort()</code> - 根据键，以降序对关联数组进行排序</li>
+</ul>
+<h3 id="PHP-全局变量-超全局变量"><a href="#PHP-全局变量-超全局变量" class="headerlink" title="PHP 全局变量 - 超全局变量"></a>PHP 全局变量 - 超全局变量</h3><p>PHP 中的许多预定义变量都是“超全局的”，这意味着它们在一个脚本的全部作用域中都可用。在函数或方法中无需执行 <code>global $variable</code>; 就可以访问它们。</p>
+<ul>
+<li><code>$GLOBALS</code> : 用于在 PHP 脚本中的任意位置访问全局变量（从函数或方法中均可）。</li>
+<li><code>$_SERVER</code> : 保存关于报头、路径和脚本位置的信息。</li>
+<li><code>$_REQUEST</code> : 用于收集 HTML 表单提交的数据。</li>
+<li><code>$_POST</code> : 广泛用于收集提交 method=”post” 的 HTML 表单后的表单数据。$_POST 也常用于传递变量。</li>
+<li><code>$_GET</code> : 可用于收集提交 HTML 表单 (method=”get”) 之后的表单数据，也可以收集 URL 中的发送的数据。</li>
+<li><code>$_FILES</code></li>
+<li><code>$_ENV</code></li>
+<li><code>$_COOKIE</code></li>
+<li><code>$_SESSION</code></li>
+</ul>
+<h2 id="PHP-表单"><a href="#PHP-表单" class="headerlink" title="PHP 表单"></a>PHP 表单</h2><h3 id="PHP-表单处理"><a href="#PHP-表单处理" class="headerlink" title="PHP 表单处理"></a>PHP 表单处理</h3><p>PHP 超全局变量 $_GET 和 $_POST 用于收集表单数据（form-data）。</p>
+<p>GET vs. POST：</p>
+<ul>
+<li><p>GET 和 POST 都创建数组（例如，array( key =&gt; value, key2 =&gt; value2, key3 =&gt; value3, …)）。此数组包含键/值对，其中的键是表单控件的名称，而值是来自用户的输入数据。</p>
+</li>
+<li><p>GET 和 POST 被视作 <code>$_GET</code> 和 <code>$_POST</code>。它们是超全局变量，这意味着对它们的访问无需考虑作用域 - 无需任何特殊代码，您能够从任何函数、类或文件访问它们。</p>
+</li>
+<li><p><code>$_GET</code> 是通过 URL 参数传递到当前脚本的变量数组。</p>
+</li>
+<li><p><code>$_POST</code> 是通过 HTTP POST 传递到当前脚本的变量数组。</p>
+</li>
+</ul>
+<h4 id="何时使用-GET"><a href="#何时使用-GET" class="headerlink" title="何时使用 GET"></a>何时使用 GET</h4><ul>
+<li>通过 GET 方法从表单发送的信息对任何人都是可见的（所有变量名和值都显示在 URL 中）。GET 对所发送信息的数量也有限制。限制在大约 2000 个字符。不过，<em>由于变量显示在 URL 中，把页面添加到书签中也更为方便。</em></li>
+<li>ET 可用于发送非敏感的数据。</li>
+</ul>
+<p>注释：绝不能使用 GET 来发送密码或其他<font color=orangered>敏感信息</font>！</p>
+<h4 id="何时使用-POST"><a href="#何时使用-POST" class="headerlink" title="何时使用 POST"></a>何时使用 POST</h4><ul>
+<li><p>通过 POST 方法从表单发送的信息对其他人是不可见的（所有名称/值会被嵌入 HTTP 请求的主体中），并且对所发送信息的数量也无限制。</p>
+</li>
+<li><p>此外 POST 支持高阶功能，比如在向服务器上传文件时进行 multi-part 二进制输入。</p>
+</li>
+<li><p>不过，由于变量未显示在 URL 中，也就无法将页面添加到书签。</p>
+</li>
+</ul>
+<p>提示：<em>开发者偏爱 POST 来发送表单数据</em>。</p>
+<h3 id="PHP-表单验证"><a href="#PHP-表单验证" class="headerlink" title="PHP 表单验证"></a>PHP 表单验证</h3><p>在处理PHP表单时需要注意安全性。</p>
+<h4 id="文本字段"><a href="#文本字段" class="headerlink" title="文本字段"></a>文本字段</h4><ul>
+<li><p>文本输入元素：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文本框</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">"comment"</span> <span class="attr">rows</span>=<span class="string">"5"</span> <span class="attr">cols</span>=<span class="string">"40"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="单选按钮"><a href="#单选按钮" class="headerlink" title="单选按钮"></a>单选按钮</h4>  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">value</span>=<span class="string">"female"</span>&gt;</span>Female</span><br></pre></td></tr></table></figure>
+
+<h3 id="表单元素"><a href="#表单元素" class="headerlink" title="表单元素"></a>表单元素</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"&lt;?php echo htmlspecialchars($_SERVER["</span><span class="attr">PHP_SELF</span>"]);?&gt;</span>"&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当提交此表单时，通过 method=”post” 发送表单数据。</p>
+<ul>
+<li><p><code>$_SERVER[&quot;PHP_SELF&quot;]</code>变量</p>
+<p><code>$_SERVER[&quot;PHP_SELF&quot;]</code> 是一种超全局变量，它返回当前执行脚本的文件名。因此，<code>$_SERVER[&quot;PHP_SELF&quot;]</code>将表单数据发送到页面本身，而不是跳转到另一张页面。这样，用户就能够在表单页面获得错误提示信息。</p>
+</li>
+<li><p><code>htmlspecialchars()</code>函数</p>
+<p><code>htmlspecialchars()</code>函数把特殊字符转换为 HTML 实体。这意味着 &lt; 和 &gt; 之类的 HTML 字符会被替换为 <code>&amp;lt;</code> 和 <code>&amp;gt;</code> 。这样可<font color=orangered>防止攻击者通过在表单中注入 HTML 或 JavaScript 代码（跨站点脚本攻击）对代码进行利用</font>。</p>
+</li>
+</ul>
+<h3 id="关于-PHP-表单安全性的重要提示"><a href="#关于-PHP-表单安全性的重要提示" class="headerlink" title="关于 PHP 表单安全性的重要提示"></a>关于 PHP 表单安全性的重要提示</h3><p><code>$_SERVER[&quot;PHP_SELF&quot;]</code> 变量能够被黑客利用！如果您的页面使用了 <code>PHP_SELF</code>，用户能够输入下划线然后执行跨站点脚本（XSS）。</p>
+<p>通过使用 <code>htmlspecialchars()</code> 函数能够避免 <code>$_SERVER[&quot;PHP_SELF&quot;]</code> 被利用。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"&lt;?php echo htmlspecialchars($_SERVER["</span><span class="attr">PHP_SELF</span>"]);?&gt;</span>"&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>htmlspecialchars()</code> 函数把特殊字符转换为 HTML 实体。</p>
+<p>现在，如果用户试图利用 PHP_SELF 变量，会导致如下输出：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">如果用户在地址栏中键入了如下 URL：</span><br><span class="line">http://www.example.com/test_form.php/%22%3E%3Cscript%3Ealert('hacked')%3C/script%3E</span><br><span class="line">上面的代码会转换为：</span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"test_form.php"</span>/&gt;</span><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">alert(<span class="string">'hacked'</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">使用 `htmlspecialchars()` 函数:</span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"test_form.php/<span class="symbol">&amp;quot;</span><span class="symbol">&amp;gt;</span><span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>alert('hacked')<span class="symbol">&amp;lt;</span>/script<span class="symbol">&amp;gt;</span>"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="通过-PHP-验证表单数据"><a href="#通过-PHP-验证表单数据" class="headerlink" title="通过 PHP 验证表单数据"></a>通过 PHP 验证表单数据</h3><p>我们要做的第一件事是通过 PHP 的 <code>htmlspecialchars()</code> 函数传递所有变量。在用户提交该表单时，我们还要做两件事：</p>
+<ol>
+<li>（通过 PHP <code>trim()</code> 函数）去除用户输入数据中不必要的字符（多余的空格、制表符、换行）;</li>
+<li>（通过 PHP <code>stripslashes()</code> 函数）删除用户输入数据中的反斜杠（\）;</li>
+</ol>
+<p>接下来我们创建一个检查函数（相比一遍遍地写代码，这样效率更好）:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$name = $email = $gender = $comment = $website = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($_SERVER[<span class="string">"REQUEST_METHOD"</span>] == <span class="string">"POST"</span>) &#123;</span><br><span class="line">  $name = test_input($_POST[<span class="string">"name"</span>]);</span><br><span class="line">  $email = test_input($_POST[<span class="string">"email"</span>]);</span><br><span class="line">  $website = test_input($_POST[<span class="string">"website"</span>]);</span><br><span class="line">  $comment = test_input($_POST[<span class="string">"comment"</span>]);</span><br><span class="line">  $gender = test_input($_POST[<span class="string">"gender"</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test_input</span><span class="params">($data)</span> </span>&#123;</span><br><span class="line">  $data = trim($data);</span><br><span class="line">  $data = stripslashes($data);</span><br><span class="line">  $data = htmlspecialchars($data);</span><br><span class="line">  <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意在脚本开头，我们检查了表单是否使用 <code>$_SERVER[&quot;REQUEST_METHOD&quot;]</code> 进行提交。如果 REQUEST_METHOD 是 POST，那么表单已被提交 - 并且应该对其进行验证。如果未提交，则跳过验证并显示一个空白表单。</p>
+<h3 id="PHP-表单验证-必填字段"><a href="#PHP-表单验证-必填字段" class="headerlink" title="PHP 表单验证 - 必填字段"></a>PHP 表单验证 - 必填字段</h3><p>通过 <code>empty()</code> 函数检查 <code>$_POST</code> 变量是否为空。如果为空，则错误消息会存储于不同的错误变量中。如果不为空，则通过 <code>test_input()</code> 函数发送用户输入数据：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义变量并设置为空值</span></span><br><span class="line">$nameErr = $emailErr = $genderErr = $websiteErr = <span class="string">""</span>;</span><br><span class="line">$name = $email = $gender = $comment = $website = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($_SERVER[<span class="string">"REQUEST_METHOD"</span>] == <span class="string">"POST"</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">empty</span>($_POST[<span class="string">"name"</span>])) &#123;</span><br><span class="line">    $nameErr = <span class="string">"Name is required"</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $name = test_input($_POST[<span class="string">"name"</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 HTML 表单中，我们在每个被请求字段后面增加了一点脚本。如果需要，会生成恰当的错误消息（如果用户未填写必填字段就试图提交表单）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"&lt;?php echo htmlspecialchars($_SERVER["</span><span class="attr">PHP_SELF</span>"]);?&gt;</span>"&gt;</span><br><span class="line">  Name: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"error"</span>&gt;</span>* <span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> $nameErr;<span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">  E-mail:</span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"email"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"error"</span>&gt;</span>* <span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> $emailErr;<span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">  Website:</span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"website"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"error"</span>&gt;</span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> $websiteErr;<span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span>Comment: <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">"comment"</span> <span class="attr">rows</span>=<span class="string">"5"</span> <span class="attr">cols</span>=<span class="string">"40"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">  Gender:</span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">value</span>=<span class="string">"female"</span>&gt;</span>Female</span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">value</span>=<span class="string">"male"</span>&gt;</span>Male</span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"error"</span>&gt;</span>* <span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> $genderErr;<span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"Submit"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-表单验证-验证-E-mail-和-URL"><a href="#PHP-表单验证-验证-E-mail-和-URL" class="headerlink" title="PHP 表单验证 - 验证 E-mail 和 URL"></a>PHP 表单验证 - 验证 E-mail 和 URL</h3><h4 id="PHP-验证名字"><a href="#PHP-验证名字" class="headerlink" title="PHP - 验证名字"></a>PHP - 验证名字</h4><p><code>preg_match()</code> 函数检索字符串的模式，如果模式存在则返回 true，否则返回 false。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$name = test_input($_POST[<span class="string">"name"</span>]);</span><br><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">"/^[a-zA-Z ]*$/"</span>,$name)) &#123;</span><br><span class="line">  $nameErr = <span class="string">"只允许字母和空格！"</span>;s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="PHP-验证-E-mail"><a href="#PHP-验证-E-mail" class="headerlink" title="PHP - 验证 E-mail"></a>PHP - 验证 E-mail</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$email = test_input($_POST[<span class="string">"email"</span>]);</span><br><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">"/([\w\-]+\@[\w\-]+\.[\w\-]+)/"</span>,$email)) &#123;</span><br><span class="line">  $emailErr = <span class="string">"无效的 email 格式！"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="PHP-验证-URL"><a href="#PHP-验证-URL" class="headerlink" title="PHP - 验证 URL"></a>PHP - 验证 URL</h4><p>以下代码展示的方法检查 URL 地址语法是否有效（这条正则表达式同时允许 URL 中的斜杠）。如果 URL 地址语法无效，则存储一条错误消息：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$website = test_input($_POST[<span class="string">"website"</span>]);</span><br><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">"/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&amp;@#\/%?=~_|!:,.;]*[-a-z0-9+&amp;@#\/%</span></span><br><span class="line"><span class="string">=~_|]/i"</span>,$website)) &#123;</span><br><span class="line">  $websiteErr = <span class="string">"无效的 URL"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-保留表单中的值"><a href="#PHP-保留表单中的值" class="headerlink" title="PHP - 保留表单中的值"></a>PHP - 保留表单中的值</h3><p>如需在用户点击提交按钮后在输入字段中显示值，我们在以下输入字段的 value 属性中增加了一小段 PHP 脚本：name、email 以及 website。在 comment 文本框字段中，我们把脚本放到了 <textarea> 与 </textarea> 之间。这些脚本输出 $name、$email、$website 和 $comment 变量的值。</p>
+<p>然后，我们还需要显示选中了哪个单选按钮。对此，我们必须操作 checked 属性（而非单选按钮的 value 属性）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Name: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"&lt;?php echo $name;?&gt;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">E-mail: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">value</span>=<span class="string">"&lt;?php echo $email;?&gt;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">Website: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"website"</span> <span class="attr">value</span>=<span class="string">"&lt;?php echo $website;?&gt;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">Comment: <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">"comment"</span> <span class="attr">rows</span>=<span class="string">"5"</span> <span class="attr">cols</span>=<span class="string">"40"</span>&gt;</span><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> $comment;<span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line"></span><br><span class="line">Gender:</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span></span></span><br><span class="line">&lt;?php if (isset($gender) &amp;&amp; $gender=="female") echo "checked";?&gt;</span><br><span class="line">value="female"&gt;Female</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span></span></span><br><span class="line">&lt;?php if (isset($gender) &amp;&amp; $gender=="male") echo "checked";?&gt;</span><br><span class="line">value="male"&gt;Male</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.w3school.com.cn/php/index.asp" target="_blank" rel="noopener">w3school</a></p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title= "HTTP协议学习笔记">
+                    <div class="nextTitle">HTTP协议学习笔记</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/04/21/Mac%E4%B8%8B%E5%88%A9%E7%94%A8MAMP%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAPHP%E7%8E%AF%E5%A2%83/" title= "Mac下利用MAMP快速搭建PHP环境">
+                    <div class="prevTitle">Mac下利用MAMP快速搭建PHP环境</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+    
+        
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:fecee.h@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fecee" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本语法"><span class="toc-number">1.</span> <span class="toc-text">基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#变量"><span class="toc-number">1.1.</span> <span class="toc-text">变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#echo-amp-print"><span class="toc-number">1.2.</span> <span class="toc-text">echo &amp; print</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-number">1.3.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-字符串函数"><span class="toc-number">1.4.</span> <span class="toc-text">PHP 字符串函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置-PHP-常量"><span class="toc-number">1.5.</span> <span class="toc-text">设置 PHP 常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-字符串运算符"><span class="toc-number">1.6.</span> <span class="toc-text">PHP 字符串运算符*</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-比较运算符"><span class="toc-number">1.7.</span> <span class="toc-text">PHP 比较运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-foreach-循环"><span class="toc-number">1.8.</span> <span class="toc-text">PHP foreach 循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-数组"><span class="toc-number">1.9.</span> <span class="toc-text">PHP 数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引数组"><span class="toc-number">1.10.</span> <span class="toc-text">索引数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关联数组"><span class="toc-number">1.11.</span> <span class="toc-text">关联数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的排序函数"><span class="toc-number">1.12.</span> <span class="toc-text">数组的排序函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-全局变量-超全局变量"><span class="toc-number">1.13.</span> <span class="toc-text">PHP 全局变量 - 超全局变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-表单"><span class="toc-number">2.</span> <span class="toc-text">PHP 表单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-表单处理"><span class="toc-number">2.1.</span> <span class="toc-text">PHP 表单处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#何时使用-GET"><span class="toc-number">2.1.1.</span> <span class="toc-text">何时使用 GET</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#何时使用-POST"><span class="toc-number">2.1.2.</span> <span class="toc-text">何时使用 POST</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-表单验证"><span class="toc-number">2.2.</span> <span class="toc-text">PHP 表单验证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文本字段"><span class="toc-number">2.2.1.</span> <span class="toc-text">文本字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单选按钮"><span class="toc-number">2.2.2.</span> <span class="toc-text">单选按钮</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表单元素"><span class="toc-number">2.3.</span> <span class="toc-text">表单元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于-PHP-表单安全性的重要提示"><span class="toc-number">2.4.</span> <span class="toc-text">关于 PHP 表单安全性的重要提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过-PHP-验证表单数据"><span class="toc-number">2.5.</span> <span class="toc-text">通过 PHP 验证表单数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-表单验证-必填字段"><span class="toc-number">2.6.</span> <span class="toc-text">PHP 表单验证 - 必填字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-表单验证-验证-E-mail-和-URL"><span class="toc-number">2.7.</span> <span class="toc-text">PHP 表单验证 - 验证 E-mail 和 URL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PHP-验证名字"><span class="toc-number">2.7.1.</span> <span class="toc-text">PHP - 验证名字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PHP-验证-E-mail"><span class="toc-number">2.7.2.</span> <span class="toc-text">PHP - 验证 E-mail</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PHP-验证-URL"><span class="toc-number">2.7.3.</span> <span class="toc-text">PHP - 验证 URL</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-保留表单中的值"><span class="toc-number">2.8.</span> <span class="toc-text">PHP - 保留表单中的值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 21
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2020/05/03/MS-SQL-DB-OWNER-Notes/" >MS SQL Server db_owner 权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2020/05/02/MS-SQL-Sa-Notes/" >MS SQL Server Sa 权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2020/05/01/MS-SQL-Blind-Notes/" >MS SQL Server 盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MS-SQL-Errorbased-Notes/" >MS SQL Server 报错注入笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MS-SQL-UNION-INJ-Notes/" >MS SQL Sever 联合查询注入笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MySQL-Root-Notes/" >MySQL注入Root权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-TimeBased-Blind/" >基于Sqli-Labs的SQL时间盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-Bool-Blind/" >基于DVWA的SQL布尔盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2020/04/28/ErrorBased-SQL-Notes/" >MySQL报错注入学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/DVWA-SQL-Notes/" >基于DVWA的SQL联合查询注入学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-Pro-Install/" >Burpsuite Pro 2.1.05 破解版安装教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-notes/" >BurpSuite入门笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Useragent-book/" >浏览器User-Agent整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/BurpSuite-localhost-data/" >BurpSuite无法抓取本地包的解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" >本地靶场搭建笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >MySQL学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B02/" >PHP入门笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/WEB%E9%80%9A%E4%BF%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >WEB通信学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >HTTP协议学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >PHP入门笔记1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2020/04/21/Mac%E4%B8%8B%E5%88%A9%E7%94%A8MAMP%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAPHP%E7%8E%AF%E5%A2%83/" >Mac下利用MAMP快速搭建PHP环境</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
+    
+        <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
+    
+        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Yi"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->    
+     
+    </body>
+</html>
+
+

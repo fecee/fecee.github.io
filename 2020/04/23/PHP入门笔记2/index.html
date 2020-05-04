@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Yi">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Yi">
+    
+    <meta name="keywords" content="Yi's Blog,Yi">
+    
+    <meta name="description" content="">
+    <meta name="description" content="PHP 基础语法2PHP 多维数组二维数组实例：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP入门笔记2">
+<meta property="og:url" content="http://yoursite.com/2020/04/23/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B02/index.html">
+<meta property="og:site_name" content="Yi&#39;s Blog">
+<meta property="og:description" content="PHP 基础语法2PHP 多维数组二维数组实例：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-23T15:08:44.000Z">
+<meta property="article:modified_time" content="2020-04-24T03:21:38.000Z">
+<meta property="article:author" content="Yi">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Web基础">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>PHP入门笔记2 · Yi&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/null" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+    
+        <body class="post-body">
+    
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Yi&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">PHP入门笔记2</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Yi's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/egan-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            PHP入门笔记2
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web基础">Web基础</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">3.1k</span>Reading time: <span class="post-count reading-time">12 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/04/23</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="PHP-基础语法2"><a href="#PHP-基础语法2" class="headerlink" title="PHP 基础语法2"></a>PHP 基础语法2</h2><h3 id="PHP-多维数组"><a href="#PHP-多维数组" class="headerlink" title="PHP 多维数组"></a>PHP 多维数组</h3><p>二维数组实例：</p>
+<a id="more"></a>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$cars = <span class="keyword">array</span></span><br><span class="line">  (</span><br><span class="line">  <span class="keyword">array</span>(<span class="string">"Volvo"</span>,<span class="number">22</span>,<span class="number">18</span>),</span><br><span class="line">  <span class="keyword">array</span>(<span class="string">"BMW"</span>,<span class="number">15</span>,<span class="number">13</span>),</span><br><span class="line">  <span class="keyword">array</span>(<span class="string">"Saab"</span>,<span class="number">5</span>,<span class="number">2</span>),</span><br><span class="line">  <span class="keyword">array</span>(<span class="string">"Land Rover"</span>,<span class="number">17</span>,<span class="number">15</span>)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ($row = <span class="number">0</span>; $row &lt; <span class="number">4</span>; $row++) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;p&gt;&lt;b&gt;Row number $row&lt;/b&gt;&lt;/p&gt;"</span>;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;ul&gt;"</span>;</span><br><span class="line">  <span class="keyword">for</span> ($col = <span class="number">0</span>; $col &lt; <span class="number">3</span>; $col++) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;li&gt;"</span>.$cars[$row][$col].<span class="string">"&lt;/li&gt;"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;/ul&gt;"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-日期和时间"><a href="#PHP-日期和时间" class="headerlink" title="PHP 日期和时间"></a>PHP 日期和时间</h3><h4 id="PHP-Date-函数"><a href="#PHP-Date-函数" class="headerlink" title="PHP Date() 函数"></a>PHP Date() 函数</h4><p><code>date(format,timestamp)</code>:</p>
+<ul>
+<li>format：必需。规定时间戳的格式。</li>
+<li>timestamp：可选。规定时间戳。默认是当前时间和日期。</li>
+</ul>
+<p>下面列出了一些常用于日期的字符：</p>
+<ul>
+<li>d - 表示月里的某天（01-31）</li>
+<li>m - 表示月（01-12）</li>
+<li>Y - 表示年（四位数）</li>
+<li>1 - 表示周里的某天</li>
+</ul>
+<h4 id="PHP-提示-自动版权年份"><a href="#PHP-提示-自动版权年份" class="headerlink" title="PHP 提示 - 自动版权年份"></a>PHP 提示 - 自动版权年份</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">© 2010-<span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> date(<span class="string">"Y"</span>)<span class="meta">?&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>下面是常用于时间的字符：</p>
+<ul>
+<li>h - 带有首位零的 12 小时小时格式</li>
+<li>i - 带有首位零的分钟</li>
+<li>s - 带有首位零的秒（00 -59）</li>
+<li>a - 小写的午前和午后（am 或 pm）</li>
+</ul>
+<p>注释：请注意 PHP date() 函数会返回<strong>服务器</strong>的当前日期/时间！</p>
+<h4 id="获得时区"><a href="#获得时区" class="headerlink" title="获得时区"></a>获得时区</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">date_default_timezone_set(<span class="string">"Asia/Shanghai"</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"当前时间是 "</span> . date(<span class="string">"h:i:sa"</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="通过-PHP-mktime-创建日期"><a href="#通过-PHP-mktime-创建日期" class="headerlink" title="通过 PHP mktime() 创建日期"></a>通过 PHP mktime() 创建日期</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mktime(hour,minute,second,month,day,year)</span><br><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?php</span></span></span><br><span class="line"><span class="php">$d=mktime(<span class="number">9</span>, <span class="number">12</span>, <span class="number">31</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">2015</span>);</span></span><br><span class="line"><span class="php"><span class="keyword">echo</span> <span class="string">"创建日期是 "</span> . date(<span class="string">"Y-m-d h:i:sa"</span>, $d);</span></span><br><span class="line"><span class="php"><span class="meta">?&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="通过-PHP-strtotime-用字符串来创建日期"><a href="#通过-PHP-strtotime-用字符串来创建日期" class="headerlink" title="通过 PHP strtotime() 用字符串来创建日期"></a>通过 PHP strtotime() 用字符串来创建日期</h4><p>PHP strtotime() 函数用于把人类可读的字符串转换为 Unix 时间。PHP 在将字符串转换为日期这方面非常聪明，所以您能够使用各种值：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$d=strtotime(<span class="string">"tomorrow"</span>);</span><br><span class="line"><span class="keyword">echo</span> date(<span class="string">"Y-m-d h:i:sa"</span>, $d) . <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"></span><br><span class="line">$d=strtotime(<span class="string">"next Saturday"</span>);</span><br><span class="line"><span class="keyword">echo</span> date(<span class="string">"Y-m-d h:i:sa"</span>, $d) . <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"></span><br><span class="line">$d=strtotime(<span class="string">"+3 Months"</span>);</span><br><span class="line"><span class="keyword">echo</span> date(<span class="string">"Y-m-d h:i:sa"</span>, $d) . <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>下例输出下周六的日期：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$startdate = strtotime(<span class="string">"Saturday"</span>);</span><br><span class="line">$enddate = strtotime(<span class="string">"+6 weeks"</span>,$startdate);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> ($startdate &lt; $enddate) &#123;</span><br><span class="line">  <span class="keyword">echo</span> date(<span class="string">"M d"</span>, $startdate),<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">  $startdate = strtotime(<span class="string">"+1 week"</span>, $startdate);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下例输出七月四日之前的天数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$d1=strtotime(<span class="string">"December 31"</span>);</span><br><span class="line">$d2=ceil(($d1-time())/<span class="number">60</span>/<span class="number">60</span>/<span class="number">24</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"距离十二月三十一日还有："</span> . $d2 .<span class="string">" 天。"</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-Include"><a href="#PHP-Include" class="headerlink" title="PHP Include"></a>PHP Include</h3><p>服务器端包含 (SSI) 用于创建可在多个页面重复使用的函数、页眉、页脚或元素。通过 <code>include</code> 或 <code>require</code> 语句，可以将 PHP 文件的内容插入另一个 PHP 文件（<font color=orangered>在服务器执行它之前</font>）。</p>
+<p><code>include</code> 和 <code>require</code> 语句是相同的，<font color=orangered>除了错误处理方面</font>：</p>
+<ul>
+<li><code>require</code> 会生成致命错误（E_COMPILE_ERROR）并停止脚本</li>
+<li><code>include</code> 只生成警告（E_WARNING），并且脚本会继续</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">'filename'</span>;</span><br><span class="line"><span class="keyword">require</span> <span class="string">'filename'</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>请在此时使用 <code>require</code>：当文件被应用程序请求时。</li>
+<li>请在此时使用 <code>include</code>：当文件不是必需的，且应用程序在文件未找到时应该继续运行时。</li>
+</ul>
+<h3 id="PHP-文件处理"><a href="#PHP-文件处理" class="headerlink" title="PHP 文件处理"></a>PHP 文件处理</h3><h4 id="PHP-操作文件"><a href="#PHP-操作文件" class="headerlink" title="PHP 操作文件"></a>PHP 操作文件</h4><p>常见的文件操作错误是：</p>
+<ul>
+<li>编辑错误的文件</li>
+<li>被垃圾数据填满硬盘</li>
+<li>意外删除文件内容</li>
+</ul>
+<p><code>readfile()</code> 函数读取文件，并把它写入输出缓冲。</p>
+<h3 id="PHP-文件打开-读取-关闭"><a href="#PHP-文件打开-读取-关闭" class="headerlink" title="PHP 文件打开/读取/关闭"></a>PHP 文件打开/读取/关闭</h3><p>打开文件的更好的方法是通过 <code>fopen()</code> 函数。此函数为您提供比 <code>readfile()</code> 函数更多的选项。</p>
+<ul>
+<li><p><code>fopen()</code> 的第一个参数包含被打开的文件名，第二个参数规定打开文件的模式。如果 <code>fopen()</code> 函数未能打开指定的文件，下面的例子会生成一段消息：</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$myfile = fopen(<span class="string">"webdictionary.txt"</span>, <span class="string">"r"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"Unable to open file!"</span>);</span><br><span class="line"><span class="keyword">echo</span> fread($myfile,filesize(<span class="string">"webdictionary.txt"</span>));</span><br><span class="line">fclose($myfile);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>fread()</code> 函数读取打开的文件。</p>
+</li>
+<li><p><code>fclose()</code> 函数用于关闭打开的文件（或者存有文件名的变量）。用完文件后把它们全部关闭是一个良好的编程习惯。您并不想打开的文件占用您的服务器资源。</p>
+</li>
+<li><p><code>fgets()</code> 函数用于从文件读取单行。<font color=orangered>调用 fgets() 函数之后，文件指针会移动到下一行</font>。</p>
+</li>
+<li><p><code>feof()</code> 函数检查是否已到达 “end-of-file” (EOF)。<code>feof()</code> 对于遍历未知长度的数据很有用。</p>
+  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$myfile = fopen(<span class="string">"webdictionary.txt"</span>, <span class="string">"r"</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"Unable to open file!"</span>);</span><br><span class="line"><span class="comment">// 输出单行直到 end-of-file</span></span><br><span class="line"><span class="keyword">while</span>(!feof($myfile)) &#123;</span><br><span class="line"><span class="keyword">echo</span> fgets($myfile) . <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line">fclose($myfile);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>fgetc()</code> 函数用于从文件中读取单个字符。</p>
+</li>
+</ul>
+<h3 id="PHP-文件创建-写入"><a href="#PHP-文件创建-写入" class="headerlink" title="PHP 文件创建/写入"></a>PHP 文件创建/写入</h3><ul>
+<li><p><code>fopen()</code> 创建文件。如果用 <code>fopen()</code> 打开并不存在的文件，此函数会创建文件，假定文件被打开为写入（w）或增加（a）。<br>  如果试图运行这段代码时发生错误，请检查您是否有向硬盘写入信息的 PHP <font color=orangered>文件访问权限</font>。</p>
+</li>
+<li><p><code>fwrite()</code> 函数用于写入文件。<code>fwrite()</code> 的第一个参数包含要写入的文件的文件名，第二个参数是被写的字符串。<br>  如果现在 “newfile.txt” 包含了一些数据，我们可以展示在写入已有文件时发生的的事情。所有已存在的数据会被<strong>擦除</strong>并以一个新文件开始。</p>
+</li>
+</ul>
+<h3 id="PHP-文件上传"><a href="#PHP-文件上传" class="headerlink" title="PHP 文件上传"></a>PHP 文件上传</h3><p><code>&lt;form&gt;</code> 标签的 enctype 属性规定了在提交表单时要使用哪种内容类型。在表单需要二进制数据时，比如文件内容，请使用 <code>&quot;multipart/form-data&quot;</code>。<br><code>&lt;input&gt;</code> 标签的 type=”file” 属性规定了应该把输入作为文件来处理。举例来说，当在浏览器中预览时，会看到输入框旁边有一个浏览按钮。</p>
+<p>通过使用 PHP 的全局数组 <code>$_FILES</code>，你可以从客户计算机向远程服务器上传文件。</p>
+<p>第一个参数是表单的 input name，第二个下标可以是 “name”, “type”, “size”, “tmp_name” 或 “error”。就像这样：</p>
+<ul>
+<li><code>$_FILES[&quot;file&quot;][&quot;name&quot;]</code> - 被上传文件的名称</li>
+<li><code>$_FILES[&quot;file&quot;][&quot;type&quot;]</code> - 被上传文件的类型</li>
+<li><code>$_FILES[&quot;file&quot;][&quot;size&quot;]</code> - 被上传文件的大小，以字节计</li>
+<li><code>$_FILES[&quot;file&quot;][&quot;tmp_name&quot;]</code> - 存储在服务器的文件的临时副本的名称</li>
+<li><code>$_FILES[&quot;file&quot;][&quot;error&quot;]</code> - 由文件上传导致的错误代码</li>
+</ul>
+<p>这是一种非常简单文件上传方式。基于安全方面的考虑，您应当增加有关什么用户有权上传文件的限制。</p>
+<p><strong>注释</strong>：<em>对于 IE，识别 jpg 文件的类型必须是 pjpeg，对于 FireFox，必须是 jpeg</em>。</p>
+<p>要保存被上传的文件，我们需要把它拷贝到另外的位置：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((($_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/gif"</span>)</span><br><span class="line">|| ($_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/jpeg"</span>)</span><br><span class="line">|| ($_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/pjpeg"</span>))</span><br><span class="line">&amp;&amp; ($_FILES[<span class="string">"file"</span>][<span class="string">"size"</span>] &lt; <span class="number">20000</span>))</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> ($_FILES[<span class="string">"file"</span>][<span class="string">"error"</span>] &gt; <span class="number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Return Code: "</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"error"</span>] . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Upload: "</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>] . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Type: "</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Size: "</span> . ($_FILES[<span class="string">"file"</span>][<span class="string">"size"</span>] / <span class="number">1024</span>) . <span class="string">" Kb&lt;br /&gt;"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Temp file: "</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"tmp_name"</span>] . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (file_exists(<span class="string">"upload/"</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>]))</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">echo</span> $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>] . <span class="string">" already exists. "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      move_uploaded_file($_FILES[<span class="string">"file"</span>][<span class="string">"tmp_name"</span>],</span><br><span class="line">      <span class="string">"upload/"</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>]);</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">"Stored in: "</span> . <span class="string">"upload/"</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"Invalid file"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-Cookies"><a href="#PHP-Cookies" class="headerlink" title="PHP Cookies*"></a>PHP Cookies*</h3><p>cookie 常用于识别用户。cookie 是服务器留在用户计算机中的小文件。每当相同的计算机通过浏览器请求页面时，它同时会发送 cookie。通过 PHP，您能够<em>创建并取回</em> cookie 的值。</p>
+<h4 id="创建-cookie"><a href="#创建-cookie" class="headerlink" title="创建 cookie"></a>创建 cookie</h4><p><code>setcookie()</code> 函数用于设置 cookie。<code>setcookie()</code> 函数必须位于 <code>&lt;html&gt;</code> 标签之前。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setcookie(name, value, expire, path, domain);</span><br></pre></td></tr></table></figure>
+
+<p>在发送 cookie 时，cookie 的值会自动进行 URL 编码，在取回时进行自动解码（为防止 URL 编码，请使用 <code>setrawcookie()</code> 取而代之；也可以尝试使用<code>urldecode($str)</code>解码）。</p>
+<h4 id="取回-Cookie-的值"><a href="#取回-Cookie-的值" class="headerlink" title="取回 Cookie 的值"></a>取回 Cookie 的值</h4><p>PHP 的 <code>$_COOKIE</code> 变量用于取回 cookie 的值。使用 <code>isset()</code> 函数来确认是否已设置了 cookie：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="php"><span class="meta">&lt;?php</span></span></span><br><span class="line"><span class="php">      <span class="keyword">if</span> (<span class="keyword">isset</span>($_COOKIE[<span class="string">"user"</span>]))</span></span><br><span class="line"><span class="php">        <span class="keyword">echo</span> <span class="string">"Welcome "</span> . $_COOKIE[<span class="string">"user"</span>] . <span class="string">"!&lt;br /&gt;"</span>;</span></span><br><span class="line"><span class="php">      <span class="keyword">else</span></span></span><br><span class="line"><span class="php">        <span class="keyword">echo</span> <span class="string">"Welcome guest!&lt;br /&gt;"</span>;</span></span><br><span class="line"><span class="php">    <span class="meta">?&gt;</span></span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="删除-cookie"><a href="#删除-cookie" class="headerlink" title="删除 cookie"></a>删除 cookie</h4><p>当删除 cookie 时，您应当使过期日期变更为过去的时间点。</p>
+<h3 id="PHP-Sessions"><a href="#PHP-Sessions" class="headerlink" title="PHP Sessions*"></a>PHP Sessions*</h3><p>Session 变量用于存储有关用户会话的信息，或更改用户会话的设置。Session 变量保存的信息是单一用户的，并且可供应用程序中的所有页面使用。Session 的工作机制是：为每个访问者创建一个唯一的 id (UID)，并基于这个 UID 来存储变量。UID 存储在 cookie 中，亦或通过 URL 进行传导。</p>
+<h4 id="开始-PHP-Session"><a href="#开始-PHP-Session" class="headerlink" title="开始 PHP Session"></a>开始 PHP Session</h4><p>在您把用户信息存储到 PHP session 中之前，首先必须启动会话。<code>session_start()</code> 函数必须位于 <code>&lt;html&gt;</code> 标签之前，同时会为用户会话分配一个 UID：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?php</span> session_start(); <span class="meta">?&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="存储-Session-变量"><a href="#存储-Session-变量" class="headerlink" title="存储 Session 变量"></a>存储 Session 变量</h4><p>存储和取回 session 变量的正确方法是使用 PHP <code>$_SESSION</code> 变量：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">session_start();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_SESSION[<span class="string">'views'</span>]))</span><br><span class="line">  $_SESSION[<span class="string">'views'</span>]=$_SESSION[<span class="string">'views'</span>]+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  $_SESSION[<span class="string">'views'</span>]=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"Views="</span>. $_SESSION[<span class="string">'views'</span>];</span><br></pre></td></tr></table></figure>
+
+<h4 id="终结-Session"><a href="#终结-Session" class="headerlink" title="终结 Session"></a>终结 Session</h4><p>可以使用 <code>unset()</code> 或 <code>session_destroy()</code> 函数。</p>
+<ul>
+<li><code>unset()</code> 函数用于释放指定的 session 变量。</li>
+<li><code>session_destroy()</code> 将重置 session，您将失去所有已存储的 session 数据。</li>
+</ul>
+<h3 id="PHP-防止-E-mail-注入"><a href="#PHP-防止-E-mail-注入" class="headerlink" title="PHP 防止 E-mail 注入"></a>PHP 防止 E-mail 注入</h3><p>使用 PHP 过滤器来对输入进行验证：</p>
+<ul>
+<li><code>FILTER_SANITIZE_EMAIL</code> 从字符串中删除电子邮件的非法字符</li>
+<li><code>FILTER_VALIDATE_EMAIL</code> 验证电子邮件地址</li>
+</ul>
+<h3 id="PHP-错误处理"><a href="#PHP-错误处理" class="headerlink" title="PHP 错误处理"></a>PHP 错误处理</h3><p>基本的错误处理：使用 <code>die()</code> 函数。</p>
+<h3 id="PHP-异常处理"><a href="#PHP-异常处理" class="headerlink" title="PHP 异常处理"></a>PHP 异常处理</h3><p>异常（Exception）用于在指定的错误发生时改变脚本的正常流程。正确的处理程序应当包括：</p>
+<ul>
+<li>Try - 使用异常的函数应该位于 “try” 代码块内。如果没有触发异常，则代码将照常继续执行。但是如果异常被触发，会抛出一个异常。</li>
+<li>Throw - 这里规定如何触发异常。每一个 “throw” 必须对应至少一个 “catch”</li>
+<li>Catch - “catch” 代码块会捕获异常，并创建一个包含异常信息的对象</li>
+</ul>
+<p>异常的规则：</p>
+<ul>
+<li>需要进行异常处理的代码应该放入 try 代码块内，以便捕获潜在的异常。</li>
+<li>每个 try 或 throw 代码块必须至少拥有一个对应的 catch 代码块。</li>
+<li>使用多个 catch 代码块可以捕获不同种类的异常。</li>
+<li>可以在 try 代码块内的 catch 代码块中再次抛出（re-thrown）异常。</li>
+</ul>
+<p><font color=orangered>简而言之：如果抛出了异常，就必须捕获它。</font></p>
+<h3 id="PHP-过滤器（Filter）"><a href="#PHP-过滤器（Filter）" class="headerlink" title="PHP 过滤器（Filter）"></a>PHP 过滤器（Filter）</h3><p>PHP 过滤器用于验证和过滤来自非安全来源的数据，比如：</p>
+<ul>
+<li>来自表单的输入数据</li>
+<li>Cookies</li>
+<li>服务器变量</li>
+<li>数据库查询结果</li>
+</ul>
+<h4 id="函数和过滤器"><a href="#函数和过滤器" class="headerlink" title="函数和过滤器"></a>函数和过滤器</h4><p>如需过滤变量，请使用下面的过滤器函数之一：</p>
+<ul>
+<li><code>filter_var()</code> - 通过一个指定的过滤器来过滤单一的变量</li>
+<li><code>filter_var_array()</code> - 通过相同的或不同的过滤器来过滤多个变量</li>
+<li><code>filter_input</code> - 获取一个输入变量，并对它进行过滤</li>
+<li><code>filter_input_array</code> - 获取多个输入变量，并通过相同的或不同的过滤器对它们进行过滤</li>
+</ul>
+<h4 id="Validating-和-Sanitizing"><a href="#Validating-和-Sanitizing" class="headerlink" title="Validating 和 Sanitizing"></a>Validating 和 Sanitizing</h4><p>Validating 过滤器：</p>
+<ul>
+<li>用于验证用户输入</li>
+<li>严格的格式规则（比如 URL 或 E-Mail 验证）</li>
+<li>如果成功则返回预期的类型，如果失败则返回 FALSE</li>
+</ul>
+<p>Sanitizing 过滤器：</p>
+<ul>
+<li>用于允许或禁止字符串中指定的字符</li>
+<li>无数据格式规则</li>
+<li>始终返回字符串</li>
+</ul>
+<h4 id="Filter-Callback"><a href="#Filter-Callback" class="headerlink" title="Filter Callback"></a>Filter Callback</h4><p>通过使用 <code>FILTER_CALLBACK</code> 过滤器，可以调用自定义的函数，把它作为一个过滤器来使用。这样，我们就拥有了数据过滤的完全控制权。</p>
+<p>在下面的例子中，我们使用了一个自定义的函数把所有 <code>&quot;_&quot;</code> 转换为空格：</p>
+<ol>
+<li>创建一个把 <code>&quot;_&quot;</code> 替换为空格的函数</li>
+<li>调用 <code>filter_var()</code> 函数，它的参数是 <code>FILTER_CALLBACK</code> 过滤器以及包含我们的函数的数组</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertSpace</span><span class="params">($string)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> str_replace(<span class="string">"_"</span>, <span class="string">" "</span>, $string);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$string = <span class="string">"Peter_is_a_great_guy!"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> filter_var($string, FILTER_CALLBACK, <span class="keyword">array</span>(<span class="string">"options"</span>=&gt;<span class="string">"convertSpace"</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="PHP-数据库"><a href="#PHP-数据库" class="headerlink" title="PHP 数据库"></a>PHP 数据库</h2><h3 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql_connect(servername,username,password);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>servername：可选。规定要连接的服务器。默认是 “localhost:3306”。</li>
+<li>username：可选。规定登录所使用的用户名。默认值是拥有服务器进程的用户的名称。</li>
+<li>password：可选。规定登录所用的密码。默认是 “”。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$con = mysql_connect(<span class="string">"localhost"</span>,<span class="string">"peter"</span>,<span class="string">"abc123"</span>);</span><br><span class="line"><span class="keyword">if</span> (!$con)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">die</span>(<span class="string">'Could not connect: '</span> . mysql_error());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// some code</span></span><br><span class="line"></span><br><span class="line">mysql_close($con);</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据库执行语句"><a href="#数据库执行语句" class="headerlink" title="数据库执行语句"></a>数据库执行语句</h3><p><code>mysql_query()</code> 函数，此函数用于向 MySQL 连接发送查询或命令。</p>
+<p>创建表格实例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$con = mysql_connect(<span class="string">"localhost"</span>,<span class="string">"peter"</span>,<span class="string">"abc123"</span>);</span><br><span class="line"><span class="keyword">if</span> (!$con)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">die</span>(<span class="string">'Could not connect: '</span> . mysql_error());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create database</span></span><br><span class="line"><span class="keyword">if</span> (mysql_query(<span class="string">"CREATE DATABASE my_db"</span>,$con))</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"Database created"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"Error creating database: "</span> . mysql_error();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create table in my_db database</span></span><br><span class="line">mysql_select_db(<span class="string">"my_db"</span>, $con);</span><br><span class="line">$sql = <span class="string">"CREATE TABLE Persons</span></span><br><span class="line"><span class="string">(</span></span><br><span class="line"><span class="string">  FirstName varchar(15),</span></span><br><span class="line"><span class="string">  LastName varchar(15),</span></span><br><span class="line"><span class="string">  Age int</span></span><br><span class="line"><span class="string">)"</span>;</span><br><span class="line">mysql_query($sql,$con);</span><br><span class="line"></span><br><span class="line">mysql_close($con);</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.w3school.com.cn/php/index.asp" target="_blank" rel="noopener">w3school</a></p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title= "MySQL学习笔记">
+                    <div class="nextTitle">MySQL学习笔记</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/04/22/WEB%E9%80%9A%E4%BF%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title= "WEB通信学习笔记">
+                    <div class="prevTitle">WEB通信学习笔记</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+    
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:fecee.h@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fecee" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-基础语法2"><span class="toc-number">1.</span> <span class="toc-text">PHP 基础语法2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-多维数组"><span class="toc-number">1.1.</span> <span class="toc-text">PHP 多维数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-日期和时间"><span class="toc-number">1.2.</span> <span class="toc-text">PHP 日期和时间</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PHP-Date-函数"><span class="toc-number">1.2.1.</span> <span class="toc-text">PHP Date() 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PHP-提示-自动版权年份"><span class="toc-number">1.2.2.</span> <span class="toc-text">PHP 提示 - 自动版权年份</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获得时区"><span class="toc-number">1.2.3.</span> <span class="toc-text">获得时区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-PHP-mktime-创建日期"><span class="toc-number">1.2.4.</span> <span class="toc-text">通过 PHP mktime() 创建日期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-PHP-strtotime-用字符串来创建日期"><span class="toc-number">1.2.5.</span> <span class="toc-text">通过 PHP strtotime() 用字符串来创建日期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实例"><span class="toc-number">1.2.6.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-Include"><span class="toc-number">1.3.</span> <span class="toc-text">PHP Include</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-文件处理"><span class="toc-number">1.4.</span> <span class="toc-text">PHP 文件处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PHP-操作文件"><span class="toc-number">1.4.1.</span> <span class="toc-text">PHP 操作文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-文件打开-读取-关闭"><span class="toc-number">1.5.</span> <span class="toc-text">PHP 文件打开&#x2F;读取&#x2F;关闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-文件创建-写入"><span class="toc-number">1.6.</span> <span class="toc-text">PHP 文件创建&#x2F;写入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-文件上传"><span class="toc-number">1.7.</span> <span class="toc-text">PHP 文件上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-Cookies"><span class="toc-number">1.8.</span> <span class="toc-text">PHP Cookies*</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建-cookie"><span class="toc-number">1.8.1.</span> <span class="toc-text">创建 cookie</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#取回-Cookie-的值"><span class="toc-number">1.8.2.</span> <span class="toc-text">取回 Cookie 的值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除-cookie"><span class="toc-number">1.8.3.</span> <span class="toc-text">删除 cookie</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-Sessions"><span class="toc-number">1.9.</span> <span class="toc-text">PHP Sessions*</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#开始-PHP-Session"><span class="toc-number">1.9.1.</span> <span class="toc-text">开始 PHP Session</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#存储-Session-变量"><span class="toc-number">1.9.2.</span> <span class="toc-text">存储 Session 变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#终结-Session"><span class="toc-number">1.9.3.</span> <span class="toc-text">终结 Session</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-防止-E-mail-注入"><span class="toc-number">1.10.</span> <span class="toc-text">PHP 防止 E-mail 注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-错误处理"><span class="toc-number">1.11.</span> <span class="toc-text">PHP 错误处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-异常处理"><span class="toc-number">1.12.</span> <span class="toc-text">PHP 异常处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-过滤器（Filter）"><span class="toc-number">1.13.</span> <span class="toc-text">PHP 过滤器（Filter）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#函数和过滤器"><span class="toc-number">1.13.1.</span> <span class="toc-text">函数和过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Validating-和-Sanitizing"><span class="toc-number">1.13.2.</span> <span class="toc-text">Validating 和 Sanitizing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Filter-Callback"><span class="toc-number">1.13.3.</span> <span class="toc-text">Filter Callback</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-数据库"><span class="toc-number">2.</span> <span class="toc-text">PHP 数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库连接"><span class="toc-number">2.1.</span> <span class="toc-text">数据库连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库执行语句"><span class="toc-number">2.2.</span> <span class="toc-text">数据库执行语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 21
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2020/05/03/MS-SQL-DB-OWNER-Notes/" >MS SQL Server db_owner 权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2020/05/02/MS-SQL-Sa-Notes/" >MS SQL Server Sa 权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2020/05/01/MS-SQL-Blind-Notes/" >MS SQL Server 盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MS-SQL-Errorbased-Notes/" >MS SQL Server 报错注入笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MS-SQL-UNION-INJ-Notes/" >MS SQL Sever 联合查询注入笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MySQL-Root-Notes/" >MySQL注入Root权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-TimeBased-Blind/" >基于Sqli-Labs的SQL时间盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-Bool-Blind/" >基于DVWA的SQL布尔盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2020/04/28/ErrorBased-SQL-Notes/" >MySQL报错注入学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/DVWA-SQL-Notes/" >基于DVWA的SQL联合查询注入学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-Pro-Install/" >Burpsuite Pro 2.1.05 破解版安装教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-notes/" >BurpSuite入门笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Useragent-book/" >浏览器User-Agent整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/BurpSuite-localhost-data/" >BurpSuite无法抓取本地包的解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" >本地靶场搭建笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >MySQL学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B02/" >PHP入门笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/WEB%E9%80%9A%E4%BF%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >WEB通信学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >HTTP协议学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >PHP入门笔记1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2020/04/21/Mac%E4%B8%8B%E5%88%A9%E7%94%A8MAMP%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAPHP%E7%8E%AF%E5%A2%83/" >Mac下利用MAMP快速搭建PHP环境</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
+    
+        <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
+    
+        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Yi"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->    
+     
+    </body>
+</html>
+
+

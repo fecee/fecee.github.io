@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Yi">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Yi">
+    
+    <meta name="keywords" content="Yi's Blog,Yi">
+    
+    <meta name="description" content="">
+    <meta name="description" content="基础知识UserAgent中文名为用户代理，是Http协议中的一部分，属于头域的组成部分，UserAgent也简称UA。它是一个特殊字符串头，是一种向访问网站提供你所使用的浏览器类型及版本、操作系统及版本、浏览器内核、等信息的标识。通过这个标识，用户所访问的网站可以显示不同的排版从而为用户提供更好的体验或者进行信息统计；例如用手机访问谷歌和电脑访问是不一样的，这些是谷歌根据访问者的UA来判断的。U">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器User-Agent整理">
+<meta property="og:url" content="http://yoursite.com/2020/04/25/Useragent-book/index.html">
+<meta property="og:site_name" content="Yi&#39;s Blog">
+<meta property="og:description" content="基础知识UserAgent中文名为用户代理，是Http协议中的一部分，属于头域的组成部分，UserAgent也简称UA。它是一个特殊字符串头，是一种向访问网站提供你所使用的浏览器类型及版本、操作系统及版本、浏览器内核、等信息的标识。通过这个标识，用户所访问的网站可以显示不同的排版从而为用户提供更好的体验或者进行信息统计；例如用手机访问谷歌和电脑访问是不一样的，这些是谷歌根据访问者的UA来判断的。U">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-25T11:19:01.000Z">
+<meta property="article:modified_time" content="2020-04-26T04:31:56.557Z">
+<meta property="article:author" content="Yi">
+<meta property="article:tag" content="Web安全">
+<meta property="article:tag" content="浏览器">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>浏览器User-Agent整理 · Yi&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/null" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+    
+        <body class="post-body">
+    
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Yi&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">浏览器User-Agent整理</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Yi's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/egan-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            浏览器User-Agent整理
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "浏览器">浏览器</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">1.5k</span>Reading time: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/04/25</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>UserAgent中文名为用户代理，是Http协议中的一部分，属于头域的组成部分，UserAgent也简称UA。它是一个特殊字符串头，是一种向访问网站提供你所使用的浏览器类型及版本、操作系统及版本、浏览器内核、等信息的标识。通过这个标识，用户所访问的网站可以显示不同的排版从而为用户提供更好的体验或者进行信息统计；例如用手机访问谷歌和电脑访问是不一样的，这些是谷歌根据访问者的UA来判断的。UA可以进行伪装。<br>浏览器的UA字串的标准格式：浏览器标识(操作系统标识;加密等级标识;浏览器语言)渲染引擎标识版本信息。但各个浏览器有所不同。</p>
+<a id="more"></a>
+
+<h3 id="浏览器标识"><a href="#浏览器标识" class="headerlink" title="浏览器标识"></a>浏览器标识</h3><p>出于兼容及推广等目的，很多浏览器的标识相同，因此浏览器标识并不能说明浏览器的真实版本，真实版本信息在UA字串尾部可以找到。</p>
+<h3 id="操作系统标识"><a href="#操作系统标识" class="headerlink" title="操作系统标识"></a>操作系统标识</h3><p>FreeBSD:</p>
+<ul>
+<li>X11;FreeBSD(version no.)i386</li>
+<li>X11;FreeBSD(version no.)AMD64</li>
+</ul>
+<p>Linux:</p>
+<ul>
+<li>X11;Linux ppc</li>
+<li>X11;Linux ppc64</li>
+<li>X11;Linux i686</li>
+<li>X11;Linux x86_64</li>
+</ul>
+<p>Mac:</p>
+<ul>
+<li>Macintosh;PPC Mac OS X</li>
+<li>Macintosh;Intel Mac OS X</li>
+</ul>
+<p>Solaris:</p>
+<ul>
+<li>X11;SunOS i86pc</li>
+<li>X11;SunOs sun4u</li>
+</ul>
+<p>Windows:</p>
+<ul>
+<li>Windows NT 6.1   对应windows7</li>
+<li>Windows NT 6.0   对应windows Vista</li>
+<li>Windows NT 5.2  对应windows 2003</li>
+<li>Windows NT 5.1   对应windows xp</li>
+<li>Windows NT 5.0   对应windows 2000</li>
+<li>Windows ME</li>
+<li>Windows 98</li>
+</ul>
+<h3 id="加密等级标识"><a href="#加密等级标识" class="headerlink" title="加密等级标识"></a>加密等级标识</h3><ul>
+<li>N:表示无安全加密</li>
+<li>I:表示弱安全加密</li>
+<li>U:表示强安全加密</li>
+</ul>
+<h3 id="浏览器语言"><a href="#浏览器语言" class="headerlink" title="浏览器语言"></a>浏览器语言</h3><p>在首选项&gt;常规&gt;语言中指定的语言</p>
+<h3 id="渲染引擎"><a href="#渲染引擎" class="headerlink" title="渲染引擎"></a>渲染引擎</h3><p>显示浏览器使用的主流渲染引擎有：Gecko、WebKit、KHTML、Presto、Trident、Tasman等，格式为：渲染引擎/版本信息</p>
+<h3 id="版本信息"><a href="#版本信息" class="headerlink" title="版本信息"></a>版本信息</h3><p>显示浏览器的真实版本信息，格式为：浏览器/版本信息</p>
+<h2 id="PC浏览器大全"><a href="#PC浏览器大全" class="headerlink" title="PC浏览器大全"></a>PC浏览器大全</h2><h3 id="Opera"><a href="#Opera" class="headerlink" title="Opera"></a>Opera</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60</span><br><span class="line">Opera/8.0 (Windows NT 5.1; U; en)</span><br><span class="line">Mozilla/5.0 (Windows NT 5.1; U; en; rv:1.8.1) Gecko/20061208 Firefox/2.0.0 Opera 9.50</span><br><span class="line">Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.50</span><br></pre></td></tr></table></figure>
+
+<h3 id="Firefox"><a href="#Firefox" class="headerlink" title="Firefox"></a>Firefox</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0</span><br><span class="line">Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10</span><br></pre></td></tr></table></figure>
+
+<h3 id="Safari"><a href="#Safari" class="headerlink" title="Safari"></a>Safari</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36</span><br><span class="line">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11</span><br><span class="line">Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.133 Safari/534.16</span><br></pre></td></tr></table></figure>
+
+<h3 id="360"><a href="#360" class="headerlink" title="360"></a>360</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36</span><br><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko</span><br></pre></td></tr></table></figure>
+
+<h3 id="淘宝浏览器"><a href="#淘宝浏览器" class="headerlink" title="淘宝浏览器"></a>淘宝浏览器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.11 TaoBrowser/2.0 Safari/536.11</span><br></pre></td></tr></table></figure>
+
+<h3 id="猎豹浏览器"><a href="#猎豹浏览器" class="headerlink" title="猎豹浏览器"></a>猎豹浏览器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.71 Safari/537.1 LBBROWSER</span><br><span class="line">Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; LBBROWSER)</span><br><span class="line">Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; QQDownload 732; .NET4.0C; .NET4.0E; LBBROWSER)"</span><br></pre></td></tr></table></figure>
+
+<h3 id="QQ浏览器"><a href="#QQ浏览器" class="headerlink" title="QQ浏览器"></a>QQ浏览器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; QQBrowser/7.0.3698.400)</span><br><span class="line">Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; QQDownload 732; .NET4.0C; .NET4.0E)</span><br></pre></td></tr></table></figure>
+
+<h3 id="sogou浏览器"><a href="#sogou浏览器" class="headerlink" title="sogou浏览器"></a>sogou浏览器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.84 Safari/535.11 SE 2.X MetaSr 1.0</span><br><span class="line">Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; SV1; QQDownload 732; .NET4.0C; .NET4.0E; SE 2.X MetaSr 1.0)</span><br></pre></td></tr></table></figure>
+
+<h3 id="maxthon浏览器"><a href="#maxthon浏览器" class="headerlink" title="maxthon浏览器"></a>maxthon浏览器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Maxthon/4.4.3.4000 Chrome/30.0.1599.101 Safari/537.36</span><br></pre></td></tr></table></figure>
+
+<h3 id="UC浏览器"><a href="#UC浏览器" class="headerlink" title="UC浏览器"></a>UC浏览器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 UBrowser/4.0.3214.0 Safari/537.36</span><br></pre></td></tr></table></figure>
+
+<h2 id="移动浏览器大全"><a href="#移动浏览器大全" class="headerlink" title="移动浏览器大全"></a>移动浏览器大全</h2><h3 id="IPhone"><a href="#IPhone" class="headerlink" title="IPhone"></a>IPhone</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5</span><br></pre></td></tr></table></figure>
+
+<h3 id="IPod"><a href="#IPod" class="headerlink" title="IPod"></a>IPod</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5</span><br></pre></td></tr></table></figure>
+
+<h3 id="IPAD"><a href="#IPAD" class="headerlink" title="IPAD"></a>IPAD</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X; zh-cn) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5</span><br><span class="line">Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5</span><br></pre></td></tr></table></figure>
+
+<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Linux; U; Android 2.2.1; zh-cn; HTC_Wildfire_A3333 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1</span><br><span class="line">Mozilla/5.0 (Linux; U; Android 2.3.7; en-us; Nexus One Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="QQ浏览器-Android版本"><a href="#QQ浏览器-Android版本" class="headerlink" title="QQ浏览器 Android版本"></a>QQ浏览器 Android版本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="Android-Opera-Mobile"><a href="#Android-Opera-Mobile" class="headerlink" title="Android Opera Mobile"></a>Android Opera Mobile</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Opera/9.80 (Android 2.3.4; Linux; Opera Mobi/build-1107180945; U; en-GB) Presto/2.8.149 Version/11.10</span><br></pre></td></tr></table></figure>
+
+<h3 id="Android-Pad-Moto-Xoom"><a href="#Android-Pad-Moto-Xoom" class="headerlink" title="Android Pad Moto Xoom"></a>Android Pad Moto Xoom</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13</span><br></pre></td></tr></table></figure>
+
+<h3 id="BlackBerry"><a href="#BlackBerry" class="headerlink" title="BlackBerry"></a>BlackBerry</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (BlackBerry; U; BlackBerry 9800; en) AppleWebKit/534.1+ (KHTML, like Gecko) Version/6.0.0.337 Mobile Safari/534.1+</span><br></pre></td></tr></table></figure>
+
+<h3 id="WebOS-HP-Touchpad"><a href="#WebOS-HP-Touchpad" class="headerlink" title="WebOS HP Touchpad"></a>WebOS HP Touchpad</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.0; U; en-US) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/233.70 Safari/534.6 TouchPad/1.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Nokia-N97"><a href="#Nokia-N97" class="headerlink" title="Nokia N97"></a>Nokia N97</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaN97-1/20.0.019; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.1.18124</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-Phone-Mango"><a href="#Windows-Phone-Mango" class="headerlink" title="Windows Phone Mango"></a>Windows Phone Mango</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; HTC; Titan)</span><br></pre></td></tr></table></figure>
+
+<h3 id="UC浏览器-Mobile"><a href="#UC浏览器-Mobile" class="headerlink" title="UC浏览器_Mobile"></a>UC浏览器_Mobile</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UCWEB7.0.2.37/28/999</span><br><span class="line">NOKIA5700/ UCWEB7.0.2.37/28/999</span><br></pre></td></tr></table></figure>
+
+<h3 id="UCOpenwave"><a href="#UCOpenwave" class="headerlink" title="UCOpenwave"></a>UCOpenwave</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Openwave&#x2F; UCWEB7.0.2.37&#x2F;28&#x2F;999</span><br></pre></td></tr></table></figure>
+
+<h3 id="UC-Opera"><a href="#UC-Opera" class="headerlink" title="UC Opera"></a>UC Opera</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jianshu.com/p/70399115a8f0" target="_blank" rel="noopener">简书</a><br><a href="https://blog.csdn.net/u012175089/article/details/61199238" target="_blank" rel="noopener">CSDN</a></p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/04/25/Burpsuite-notes/" title= "BurpSuite入门笔记">
+                    <div class="nextTitle">BurpSuite入门笔记</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/04/24/BurpSuite-localhost-data/" title= "BurpSuite无法抓取本地包的解决方案">
+                    <div class="prevTitle">BurpSuite无法抓取本地包的解决方案</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+    
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:fecee.h@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fecee" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">1.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器标识"><span class="toc-number">1.1.</span> <span class="toc-text">浏览器标识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统标识"><span class="toc-number">1.2.</span> <span class="toc-text">操作系统标识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加密等级标识"><span class="toc-number">1.3.</span> <span class="toc-text">加密等级标识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器语言"><span class="toc-number">1.4.</span> <span class="toc-text">浏览器语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渲染引擎"><span class="toc-number">1.5.</span> <span class="toc-text">渲染引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#版本信息"><span class="toc-number">1.6.</span> <span class="toc-text">版本信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PC浏览器大全"><span class="toc-number">2.</span> <span class="toc-text">PC浏览器大全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Opera"><span class="toc-number">2.1.</span> <span class="toc-text">Opera</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Firefox"><span class="toc-number">2.2.</span> <span class="toc-text">Firefox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Safari"><span class="toc-number">2.3.</span> <span class="toc-text">Safari</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome"><span class="toc-number">2.4.</span> <span class="toc-text">chrome</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#360"><span class="toc-number">2.5.</span> <span class="toc-text">360</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#淘宝浏览器"><span class="toc-number">2.6.</span> <span class="toc-text">淘宝浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猎豹浏览器"><span class="toc-number">2.7.</span> <span class="toc-text">猎豹浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QQ浏览器"><span class="toc-number">2.8.</span> <span class="toc-text">QQ浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sogou浏览器"><span class="toc-number">2.9.</span> <span class="toc-text">sogou浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#maxthon浏览器"><span class="toc-number">2.10.</span> <span class="toc-text">maxthon浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UC浏览器"><span class="toc-number">2.11.</span> <span class="toc-text">UC浏览器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动浏览器大全"><span class="toc-number">3.</span> <span class="toc-text">移动浏览器大全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IPhone"><span class="toc-number">3.1.</span> <span class="toc-text">IPhone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPod"><span class="toc-number">3.2.</span> <span class="toc-text">IPod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPAD"><span class="toc-number">3.3.</span> <span class="toc-text">IPAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">3.4.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QQ浏览器-Android版本"><span class="toc-number">3.5.</span> <span class="toc-text">QQ浏览器 Android版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Opera-Mobile"><span class="toc-number">3.6.</span> <span class="toc-text">Android Opera Mobile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Pad-Moto-Xoom"><span class="toc-number">3.7.</span> <span class="toc-text">Android Pad Moto Xoom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BlackBerry"><span class="toc-number">3.8.</span> <span class="toc-text">BlackBerry</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebOS-HP-Touchpad"><span class="toc-number">3.9.</span> <span class="toc-text">WebOS HP Touchpad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nokia-N97"><span class="toc-number">3.10.</span> <span class="toc-text">Nokia N97</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-Phone-Mango"><span class="toc-number">3.11.</span> <span class="toc-text">Windows Phone Mango</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UC浏览器-Mobile"><span class="toc-number">3.12.</span> <span class="toc-text">UC浏览器_Mobile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UCOpenwave"><span class="toc-number">3.13.</span> <span class="toc-text">UCOpenwave</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UC-Opera"><span class="toc-number">3.14.</span> <span class="toc-text">UC Opera</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">4.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 21
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2020/05/03/MS-SQL-DB-OWNER-Notes/" >MS SQL Server db_owner 权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2020/05/02/MS-SQL-Sa-Notes/" >MS SQL Server Sa 权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2020/05/01/MS-SQL-Blind-Notes/" >MS SQL Server 盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MS-SQL-Errorbased-Notes/" >MS SQL Server 报错注入笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MS-SQL-UNION-INJ-Notes/" >MS SQL Sever 联合查询注入笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MySQL-Root-Notes/" >MySQL注入Root权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-TimeBased-Blind/" >基于Sqli-Labs的SQL时间盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-Bool-Blind/" >基于DVWA的SQL布尔盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2020/04/28/ErrorBased-SQL-Notes/" >MySQL报错注入学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/DVWA-SQL-Notes/" >基于DVWA的SQL联合查询注入学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-Pro-Install/" >Burpsuite Pro 2.1.05 破解版安装教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-notes/" >BurpSuite入门笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Useragent-book/" >浏览器User-Agent整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/BurpSuite-localhost-data/" >BurpSuite无法抓取本地包的解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" >本地靶场搭建笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >MySQL学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B02/" >PHP入门笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/WEB%E9%80%9A%E4%BF%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >WEB通信学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >HTTP协议学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >PHP入门笔记1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2020/04/21/Mac%E4%B8%8B%E5%88%A9%E7%94%A8MAMP%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAPHP%E7%8E%AF%E5%A2%83/" >Mac下利用MAMP快速搭建PHP环境</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
+    
+        <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
+    
+        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Yi"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->    
+     
+    </body>
+</html>
+
+

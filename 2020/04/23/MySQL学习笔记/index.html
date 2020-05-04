@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Yi">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Yi">
+    
+    <meta name="keywords" content="Yi's Blog,Yi">
+    
+    <meta name="description" content="">
+    <meta name="description" content="基础知识关系型数据库(RDBMS) 术语:  冗余：存储两倍数据，冗余降低了性能，但提高了数据的安全性。 主键：主键是唯一的。一个数据表中只能包含一个主键。你可以使用主键来查询数据。 外键：外键用于关联两个表。 复合键：复合键（组合键）将多个列作为一个索引键，一般用于复合索引。 索引：使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。 参">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL学习笔记">
+<meta property="og:url" content="http://yoursite.com/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Yi&#39;s Blog">
+<meta property="og:description" content="基础知识关系型数据库(RDBMS) 术语:  冗余：存储两倍数据，冗余降低了性能，但提高了数据的安全性。 主键：主键是唯一的。一个数据表中只能包含一个主键。你可以使用主键来查询数据。 外键：外键用于关联两个表。 复合键：复合键（组合键）将多个列作为一个索引键，一般用于复合索引。 索引：使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。 参">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-24T03:27:13.000Z">
+<meta property="article:modified_time" content="2020-04-24T11:23:08.000Z">
+<meta property="article:author" content="Yi">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>MySQL学习笔记 · Yi&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/null" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+    
+        <body class="post-body">
+    
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Yi&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">MySQL学习笔记</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Yi's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/egan-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            MySQL学习笔记
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL">SQL</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">2.6k</span>Reading time: <span class="post-count reading-time">10 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/04/23</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p><strong>关系型数据库</strong>(RDBMS) 术语:</p>
+<ul>
+<li>冗余：存储两倍数据，冗余降低了性能，但提高了数据的安全性。</li>
+<li>主键：<font color=orangered>主键是唯一的</font>。一个数据表中只能包含一个主键。你可以使用主键来查询数据。</li>
+<li>外键：外键用于关联两个表。</li>
+<li>复合键：复合键（组合键）将多个列作为一个索引键，一般用于复合索引。</li>
+<li>索引：使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。</li>
+<li>参照完整性: 参照的完整性要求关系中不允许引用不存在的实体。与实体完整性是关系模型必须满足的完整性约束条件，目的是保证数据的一致性。</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>MAMP中的mysql密码（默认root - root）和自行安装的mysql密码不同。</li>
+<li>MySQL 的SQL语句以分号 (;) 作为结束标识。</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="数据库管理"><a href="#数据库管理" class="headerlink" title="数据库管理"></a>数据库管理</h3><p>检查MySQL服务器是否启动：<code>ps -ef | grep mysqld</code><br>关闭目前运行的 MySQL 服务器：<code>mysqladmin -u root -p shutdown</code></p>
+<p>在 MySQL5.7 中 <code>user</code> 表的 <code>password</code> 已换成了<code>authentication_string</code>。<br>注意需要执行 <code>FLUSH PRIVILEGES</code> 语句。 这个命令执行后会重新载入授权表。</p>
+<p>添加用户的两种方法：</p>
+<ol>
+<li>在 mysql 数据库中的 user 表添加新用户。</li>
+<li>通过SQL的 GRANT 命令。</li>
+</ol>
+<h3 id="管理MySQL的命令"><a href="#管理MySQL的命令" class="headerlink" title="管理MySQL的命令"></a>管理MySQL的命令</h3><ul>
+<li><p><code>USE 数据库名;</code> 选择要操作的Mysql数据库。</p>
+</li>
+<li><p><code>SHOW DATABASES;</code> 列出 MySQL 数据库管理系统的数据库列表。</p>
+</li>
+<li><p><code>SHOW TABLES;</code> 显示指定数据库的所有表，使用该命令前需要使用 use 命令来选择要操作的数据库。</p>
+</li>
+<li><p><code>SHOW COLUMNS FROM 数据表;</code> 显示数据表的属性，属性类型，主键信息 ，是否为 NULL，默认值等其他信息。</p>
+</li>
+<li><p><code>SHOW INDEX FROM 数据表;</code> 显示数据表的详细索引信息，包括PRIMARY KEY（主键）。</p>
+</li>
+<li><p><code>SHOW TABLE STATUS LIKE [FROM db_name] [LIKE &#39;pattern&#39;] \G;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW TABLE STATUS  FROM RUNOOB;   # 显示数据库 RUNOOB 中所有表的信息</span><br><span class="line"></span><br><span class="line">mysql&gt; SHOW TABLE STATUS from RUNOOB LIKE &#39;runoob%&#39;;     # 表名以runoob开头的表的信息</span><br><span class="line">mysql&gt; SHOW TABLE STATUS from RUNOOB LIKE &#39;runoob%&#39;\G;   # 加上 \G，查询结果按列打印</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="MySQL-语法"><a href="#MySQL-语法" class="headerlink" title="MySQL 语法"></a>MySQL 语法</h2><h3 id="使用-PHP-脚本连接-MySQL"><a href="#使用-PHP-脚本连接-MySQL" class="headerlink" title="使用 PHP 脚本连接 MySQL"></a>使用 PHP 脚本连接 MySQL</h3><p><code>mysqli_connect()</code> 函数在成功链接到 MySQL 后返回连接标识，失败返回 FALSE 。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$conn = mysqli_connect(host,username,password,dbname,port,socket);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>host 可选。规定主机名或 IP 地址。</li>
+<li>username 可选。规定 MySQL 用户名。</li>
+<li>password 可选。规定 MySQL 密码。</li>
+<li>dbname 可选。规定默认使用的数据库。</li>
+<li>port 可选。规定尝试连接到 MySQL 服务器的端口号。</li>
+<li>socket 可选。规定 socket 或要使用的已命名 pipe。</li>
+</ul>
+<p>可以使用 PHP 的 <code>mysqli_close()</code> 函数来断开与 MySQL 数据库的链接。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool mysqli_close ( mysqli $link )</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-PHP脚本执行SQL"><a href="#使用-PHP脚本执行SQL" class="headerlink" title="使用 PHP脚本执行SQL"></a>使用 PHP脚本执行SQL</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqli_query(connection,query,resultmode);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>connection 必需。规定要使用的 MySQL 连接。</li>
+<li>query 必需，规定查询字符串。</li>
+<li>resultmode 可选。一个常量。可以是下列值中的任意一个：<ul>
+<li>MYSQLI_USE_RESULT（如果需要检索大量数据，请使用这个）</li>
+<li>MYSQLI_STORE_RESULT（默认）</li>
+</ul>
+</li>
+</ul>
+<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE 数据库名;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 mysql <code>mysqladmin</code> 命令来创建数据库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -u root -p create 数据库名</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop database &lt;数据库名&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 mysql <code>mysqladmin</code> 命令来创建数据库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -u root -p drop 数据库名</span><br></pre></td></tr></table></figure>
+
+<h3 id="选择MySQL数据库"><a href="#选择MySQL数据库" class="headerlink" title="选择MySQL数据库"></a>选择MySQL数据库</h3><p>PHP 提供了函数 <code>mysqli_select_db</code> 来选取一个数据库。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqli_select_db(connection,dbname);</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h3><p>创建MySQL数据表需要以下信息：表名、表字段名、定义每个表字段。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> table_name (column_name column_type);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`runoob_tbl`</span>(</span><br><span class="line">   <span class="string">`runoob_id`</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> AUTO_INCREMENT,</span><br><span class="line">   <span class="string">`runoob_title`</span> <span class="built_in">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">   <span class="string">`runoob_author`</span> <span class="built_in">VARCHAR</span>(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">   <span class="string">`submission_date`</span> <span class="built_in">DATE</span>,</span><br><span class="line">   PRIMARY <span class="keyword">KEY</span> ( <span class="string">`runoob_id`</span> )</span><br><span class="line">)<span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除数据表"><a href="#删除数据表" class="headerlink" title="删除数据表"></a>删除数据表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> table_name ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name ( field1, field2,...fieldN )</span><br><span class="line">                        <span class="keyword">VALUES</span></span><br><span class="line">                        ( value1, value2,...valueN );</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> runoob_tbl</span><br><span class="line">    -&gt; (runoob_title, runoob_author, submission_date)</span><br><span class="line">    -&gt; <span class="keyword">VALUES</span></span><br><span class="line">    -&gt; (<span class="string">"学习 MySQL"</span>, <span class="string">"菜鸟教程"</span>, <span class="keyword">NOW</span>());</span><br></pre></td></tr></table></figure>
+
+<p>读取数据表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> runoob_tbl;</span><br></pre></td></tr></table></figure>
+
+<p>PHP中，对于含有中文的数据插入，需要添加 <code>mysqli_query($conn , &quot;set names utf8&quot;);</code> 语句。</p>
+<h2 id="SQL-查询数据"><a href="#SQL-查询数据" class="headerlink" title="SQL 查询数据"></a>SQL 查询数据</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name,column_name</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line">[<span class="keyword">WHERE</span> Clause]</span><br><span class="line">[<span class="keyword">LIMIT</span> N][ <span class="keyword">OFFSET</span> M]</span><br></pre></td></tr></table></figure>
+
+<p>使用 PHP 函数的 <code>mysqli_query()</code> 及 <code>SQL SELECT</code> 命令来获取数据。该函数用于执行 SQL 命令，然后通过 PHP 函数 <code>mysqli_fetch_array()</code> 来使用或输出所有查询的数据。</p>
+<p><code>mysqli_fetch_array()</code> 函数从结果集中取得一行作为关联数组，或数字数组，或二者兼有 返回根据从结果集取得的行生成的数组，如果没有更多行则返回 false。</p>
+<h3 id="WHERE-子句"><a href="#WHERE-子句" class="headerlink" title="WHERE 子句"></a>WHERE 子句</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> field1, field2,...fieldN <span class="keyword">FROM</span> table_name1, table_name2...</span><br><span class="line">[<span class="keyword">WHERE</span> condition1 [<span class="keyword">AND</span> [<span class="keyword">OR</span>]] condition2.....</span><br></pre></td></tr></table></figure>
+
+<p>MySQL 的 WHERE 子句的字符串比较是不区分大小写的。 你可以使用 <code>BINARY</code> 关键字来设定 WHERE 子句的字符串比较是区分大小写的。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> runoob_tbl <span class="keyword">WHERE</span> <span class="built_in">BINARY</span> runoob_author=<span class="string">'runoob.com'</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> runoob_tbl <span class="keyword">WHERE</span> <span class="built_in">BINARY</span> runoob_author=<span class="string">'RUNOOB.COM'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="UPDATE-更新"><a href="#UPDATE-更新" class="headerlink" title="UPDATE 更新"></a>UPDATE 更新</h3><p>可以同时更新一个或多个字段，可以同时更新一个或多个字段。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_name <span class="keyword">SET</span> field1=<span class="keyword">new</span>-value1, field2=<span class="keyword">new</span>-value2</span><br><span class="line">[<span class="keyword">WHERE</span> Clause]</span><br></pre></td></tr></table></figure>
+
+<h3 id="DELETE-语句"><a href="#DELETE-语句" class="headerlink" title="DELETE 语句"></a>DELETE 语句</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name [<span class="keyword">WHERE</span> Clause]</span><br></pre></td></tr></table></figure>
+
+<p>注：如果没有指定 WHERE 子句，MySQL 表中的所有记录将被删除。</p>
+<h3 id="LIKE-子句"><a href="#LIKE-子句" class="headerlink" title="LIKE 子句"></a>LIKE 子句</h3><p>SQL LIKE 子句中使用百分号 %字符来表示任意字符，类似于UNIX或正则表达式中的星号 *，如果没有使用百分号 %, LIKE 子句与等号 = 的效果是一样的。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> field1, field2,...fieldN</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> field1 <span class="keyword">LIKE</span> condition1 [<span class="keyword">AND</span> [<span class="keyword">OR</span>]] filed2 = <span class="string">'somevalue'</span></span><br></pre></td></tr></table></figure>
+
+<p>实例：从 runoob_tbl 表中获取 runoob_author 字段中以 COM 为结尾的的所有记录：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> runoob_tbl  <span class="keyword">WHERE</span> runoob_author <span class="keyword">LIKE</span> <span class="string">'%COM'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>like 匹配/模糊匹配，会与 % 和 _ 结合使用。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">'%a'     //以a结尾的数据</span><br><span class="line">'a%'     //以a开头的数据</span><br><span class="line">'%a%'    //含有a的数据</span><br><span class="line">'_a_'    //三位且中间字母是a的</span><br><span class="line">'_a'     //两位且结尾字母是a的</span><br><span class="line">'a_'     //两位且开头字母是a的</span><br><span class="line"></span><br><span class="line">查询以 java 字段开头的信息。</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">position</span> <span class="keyword">WHERE</span> <span class="keyword">name</span> <span class="keyword">LIKE</span> <span class="string">'java%'</span>;</span><br><span class="line">查询包含 java 字段的信息。</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">position</span> <span class="keyword">WHERE</span> <span class="keyword">name</span> <span class="keyword">LIKE</span> <span class="string">'%java%'</span>;</span><br><span class="line">查询以 java 字段结尾的信息。</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">position</span> <span class="keyword">WHERE</span> <span class="keyword">name</span> <span class="keyword">LIKE</span> <span class="string">'%java'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在 where like 的条件查询中，SQL 提供了四种匹配方式。</p>
+<ul>
+<li><code>%</code>：表示任意 0 个或多个字符。可匹配任意类型和长度的字符，有些情况下若是中文，请使用两个百分号（%%）表示。</li>
+<li><code>_</code>：表示任意单个字符。匹配单个任意字符，它常用来限制表达式的字符长度语句。</li>
+<li><code>[]</code>：表示括号内所列字符中的一个（类似正则表达式）。指定一个字符、字符串或范围，要求所匹配对象为它们中的任一个。</li>
+<li><code>[^]</code> ：表示不在括号所列之内的单个字符。其取值和 [] 相同，但它要求所匹配对象为指定字符以外的任一个字符。</li>
+<li>查询内容包含通配符时,由于通配符的缘故，导致我们查询特殊字符 <code>“%”、“_”、“[”</code> 的语句无法正常实现，而把特殊字符用 “[ ]” 括起便可正常查询。</li>
+</ul>
+<h3 id="UNION-操作符"><a href="#UNION-操作符" class="headerlink" title="UNION 操作符"></a>UNION 操作符</h3><p>UNION 操作符用于<font color=orangered>连接两个以上的 SELECT 语句的结果组合到一个结果集合中</font>。多个 SELECT 语句会<em>删除重复的数据</em>。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列名称 <span class="keyword">FROM</span> 表名称 <span class="keyword">UNION</span> <span class="keyword">SELECT</span> 列名称 <span class="keyword">FROM</span> 表名称 <span class="keyword">ORDER</span> <span class="keyword">BY</span> 列名称；</span><br><span class="line"><span class="keyword">SELECT</span> 列名称 <span class="keyword">FROM</span> 表名称 <span class="keyword">UNION</span> <span class="keyword">ALL</span> <span class="keyword">SELECT</span> 列名称 <span class="keyword">FROM</span> 表名称 <span class="keyword">ORDER</span> <span class="keyword">BY</span> 列名称；</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>DISTINCT: 可选，删除结果集中重复的数据。默认情况下 UNION 操作符已经删除了重复数据，所以 DISTINCT 修饰符对结果没啥影响。</li>
+<li>ALL: 可选，返回所有结果集，包含重复数据。</li>
+</ul>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> field1, field2,...fieldN <span class="keyword">FROM</span> table_name1, table_name2...</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> field1 [<span class="keyword">ASC</span> [<span class="keyword">DESC</span>][默认 <span class="keyword">ASC</span>]], [field2...] [<span class="keyword">ASC</span> [<span class="keyword">DESC</span>][默认 <span class="keyword">ASC</span>]]</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>ASC</code> 或 <code>DESC</code>关键字来设置查询结果是按升序或降序排列。默认情况下，它是按升序排列。</p>
+<h3 id="GROUP-BY-语句"><a href="#GROUP-BY-语句" class="headerlink" title="GROUP BY 语句"></a>GROUP BY 语句</h3><p>GROUP BY 语句根据一个或多个列对结果集进行分组。在分组的列上我们可以使用 COUNT, SUM, AVG,等函数。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name, <span class="keyword">function</span>(column_name)</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> column_name <span class="keyword">operator</span> <span class="keyword">value</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> column_name;</span><br></pre></td></tr></table></figure>
+
+<p>WITH ROLLUP 可以实现在分组统计数据基础上再进行相同的统计（SUM,AVG,COUNT…）。</p>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p><a href="https://www.runoob.com/regexp/regexp-metachar.html" target="_blank" rel="noopener">元字符参考链接</a></p>
+<p>实例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">查找name字段中以'st'为开头的所有数据：</span><br><span class="line">mysql&gt; SELECT name FROM person_tbl WHERE name REGEXP '^st';</span><br><span class="line"></span><br><span class="line">查找name字段中以'ok'为结尾的所有数据：</span><br><span class="line">mysql&gt; SELECT name FROM person_tbl WHERE name REGEXP 'ok$';</span><br><span class="line"></span><br><span class="line">查找name字段中包含'mar'字符串的所有数据：</span><br><span class="line">mysql&gt; SELECT name FROM person_tbl WHERE name REGEXP 'mar';</span><br><span class="line"></span><br><span class="line">查找name字段中以元音字符开头或以'ok'字符串结尾的所有数据：</span><br><span class="line">mysql&gt; SELECT name FROM person_tbl WHERE name REGEXP '^[aeiou]|ok$';</span><br></pre></td></tr></table></figure>
+
+<h3 id="正则表达式中-i-g-ig-gi-m的区别和含义"><a href="#正则表达式中-i-g-ig-gi-m的区别和含义" class="headerlink" title="正则表达式中/i,/g,/ig,/gi,/m的区别和含义"></a>正则表达式中/i,/g,/ig,/gi,/m的区别和含义</h3><p><a href="https://blog.csdn.net/yoland/java/article/details/5431453" target="_blank" rel="noopener">参考链接</a></p>
+<ul>
+<li><code>/i</code> (忽略大小写)</li>
+<li><code>/g</code> (全文查找出现的所有匹配字符)</li>
+<li><code>/m</code> (多行查找)</li>
+<li><code>/gi</code>(全文查找、忽略大小写)</li>
+<li><code>/ig</code>(全文查找、忽略大小写)</li>
+</ul>
+<h3 id="MySQL-及-SQL-注入"><a href="#MySQL-及-SQL-注入" class="headerlink" title="MySQL 及 SQL 注入"></a>MySQL 及 SQL 注入</h3><p>防止SQL注入，我们需要注意以下几个要点：</p>
+<ol>
+<li>永远不要信任用户的输入。对用户的输入进行校验，可以通过正则表达式，或限制长度；对单引号和 双”-“进行转换等。</li>
+<li>永远不要使用动态拼装sql，可以使用参数化的sql或者直接使用存储过程进行数据查询存取。</li>
+<li>永远不要使用管理员权限的数据库连接，为每个应用使用单独的权限有限的数据库连接。</li>
+<li>不要把机密信息直接存放，加密或者hash掉密码和敏感的信息。</li>
+<li>应用的异常信息应该给出尽可能少的提示，最好使用自定义的错误信息对原始错误信息进行包装</li>
+<li>sql注入的检测方法一般采取辅助软件或网站平台来检测，软件一般采用sql注入检测工具jsky，网站平台就有亿思网站安全平台检测工具。MDCSOFT SCAN等。采用MDCSOFT-IPS可以有效的防御SQL注入，XSS攻击等。</li>
+</ol>
+<p>PHP的MySQL扩展提供了<code>mysqli_real_escape_string()</code>函数来转义特殊的输入字符。like查询时，如果用户输入的值有”_”和”%”，可以使用<code>addcslashes()</code>函数来处理。<code>addcslashes()</code>函数在指定的字符前添加反斜杠。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.runoob.com/mysql/mysql-tutorial.html" target="_blank" rel="noopener">runoob</a></p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/04/24/%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" title= "本地靶场搭建笔记">
+                    <div class="nextTitle">本地靶场搭建笔记</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/04/23/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B02/" title= "PHP入门笔记2">
+                    <div class="prevTitle">PHP入门笔记2</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+    
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:fecee.h@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fecee" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">1.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库管理"><span class="toc-number">1.1.</span> <span class="toc-text">数据库管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#管理MySQL的命令"><span class="toc-number">1.2.</span> <span class="toc-text">管理MySQL的命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-语法"><span class="toc-number">2.</span> <span class="toc-text">MySQL 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-PHP-脚本连接-MySQL"><span class="toc-number">2.1.</span> <span class="toc-text">使用 PHP 脚本连接 MySQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-PHP脚本执行SQL"><span class="toc-number">2.2.</span> <span class="toc-text">使用 PHP脚本执行SQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建数据库"><span class="toc-number">2.3.</span> <span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除数据库"><span class="toc-number">2.4.</span> <span class="toc-text">删除数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择MySQL数据库"><span class="toc-number">2.5.</span> <span class="toc-text">选择MySQL数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建数据表"><span class="toc-number">2.6.</span> <span class="toc-text">创建数据表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除数据表"><span class="toc-number">2.7.</span> <span class="toc-text">删除数据表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入数据"><span class="toc-number">2.8.</span> <span class="toc-text">插入数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL-查询数据"><span class="toc-number">3.</span> <span class="toc-text">SQL 查询数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE-子句"><span class="toc-number">3.1.</span> <span class="toc-text">WHERE 子句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UPDATE-更新"><span class="toc-number">3.2.</span> <span class="toc-text">UPDATE 更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DELETE-语句"><span class="toc-number">3.3.</span> <span class="toc-text">DELETE 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LIKE-子句"><span class="toc-number">3.4.</span> <span class="toc-text">LIKE 子句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UNION-操作符"><span class="toc-number">3.5.</span> <span class="toc-text">UNION 操作符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序"><span class="toc-number">3.6.</span> <span class="toc-text">排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GROUP-BY-语句"><span class="toc-number">3.7.</span> <span class="toc-text">GROUP BY 语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正则表达式"><span class="toc-number">3.8.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正则表达式中-i-g-ig-gi-m的区别和含义"><span class="toc-number">3.9.</span> <span class="toc-text">正则表达式中&#x2F;i,&#x2F;g,&#x2F;ig,&#x2F;gi,&#x2F;m的区别和含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-及-SQL-注入"><span class="toc-number">3.10.</span> <span class="toc-text">MySQL 及 SQL 注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">4.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 21
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2020/05/03/MS-SQL-DB-OWNER-Notes/" >MS SQL Server db_owner 权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/02</span><a class="archive-post-title" href= "/2020/05/02/MS-SQL-Sa-Notes/" >MS SQL Server Sa 权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2020/05/01/MS-SQL-Blind-Notes/" >MS SQL Server 盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MS-SQL-Errorbased-Notes/" >MS SQL Server 报错注入笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MS-SQL-UNION-INJ-Notes/" >MS SQL Sever 联合查询注入笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2020/04/30/MySQL-Root-Notes/" >MySQL注入Root权限处理学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-TimeBased-Blind/" >基于Sqli-Labs的SQL时间盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-Bool-Blind/" >基于DVWA的SQL布尔盲注学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2020/04/28/ErrorBased-SQL-Notes/" >MySQL报错注入学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/DVWA-SQL-Notes/" >基于DVWA的SQL联合查询注入学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-Pro-Install/" >Burpsuite Pro 2.1.05 破解版安装教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-notes/" >BurpSuite入门笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Useragent-book/" >浏览器User-Agent整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/BurpSuite-localhost-data/" >BurpSuite无法抓取本地包的解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" >本地靶场搭建笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >MySQL学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B02/" >PHP入门笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/WEB%E9%80%9A%E4%BF%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >WEB通信学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >HTTP协议学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >PHP入门笔记1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2020/04/21/Mac%E4%B8%8B%E5%88%A9%E7%94%A8MAMP%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAPHP%E7%8E%AF%E5%A2%83/" >Mac下利用MAMP快速搭建PHP环境</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
+    
+        <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
+    
+        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Yi"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->    
+     
+    </body>
+</html>
+
+
