@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="Yi&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/categories/Web%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:url" content="http://yoursite.com/categories/Antenna/index.html">
 <meta property="og:site_name" content="Yi&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yi">
@@ -364,12 +364,12 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/04/sqli-labs-notes/" >
+        <a class="abstract-title" href = "/2020/05/04/Antenna-Measurement-Note/" >
             
-                <span>Sqli-labs 通关笔记 (持续更新)</span>
+                <span>天线实测方法笔记</span>
         </a>
         <div class="abstract-content">
-            <h2 id="Enviroment"><a href="#Enviroment" class="headerlink" title="Enviroment"></a>Enviroment</h2><p>为了方便搭建，本文使用vulstudy搭建sqli-labs环境。搭建方法参考链接：<a href="https://github.com/c0ny1/vulstudy" target="_blank" rel="noopener">Vulstudy</a>。在实际练习中，也参考了网络上的解析文章，参考链接附在文末。关于Sqli-labs，作者Audi本人做了非常详细的教学视频，可以参考学习，视频连接：<a href="http://www.securitytube.net/user/Audi" target="_blank" rel="noopener">Audi’s Sqli-Labs Series</a>。</p>
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>通常条件下，微波暗室很难配备，如何在没有微波暗室情况下测量天线的特性参数非常重要。</p>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -380,314 +380,11 @@
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Antenna">Antenna</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "天线测试">天线测试</a>
     
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/03/MS-SQL-DB-OWNER-Notes/" >
-            
-                <span>MS SQL Server db_owner 权限处理学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="权限判断"><a href="#权限判断" class="headerlink" title="权限判断"></a>权限判断</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">and 1=(<span class="keyword">select</span> IS_SRVROLEMEMBER(<span class="string">'sysadmin'</span>)) //判断是否是系统管理员</span><br><span class="line"><span class="keyword">and</span> <span class="number">1</span>=(<span class="keyword">Select</span> IS_MEMBER(<span class="string">'db_owner'</span>)) //判断是否是库权限</span><br><span class="line"><span class="keyword">and</span> <span class="number">1</span>= (<span class="keyword">Select</span> HAS_DBACCESS(<span class="string">'master'</span>)) //判断是否有库读取权限</span><br></pre></td></tr></table></figure>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/02/MS-SQL-Sa-Notes/" >
-            
-                <span>MS SQL Server Sa 权限处理学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="MSSQL-权限处理"><a href="#MSSQL-权限处理" class="headerlink" title="MSSQL 权限处理"></a>MSSQL 权限处理</h2><p>sa全称：<code>sysadmin</code></p>
-<p>3个权限：<code>sysadmin</code>，<code>db_owner</code>，<code>public</code></p>
-<p>sa权限的处理方法：</p>
-<ul>
-<li>写 webshell</li>
-<li>下载执行<code>反向远程控制服务端</code></li>
-<li>添加用户（不推荐）</li>
-</ul>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/01/MS-SQL-Blind-Notes/" >
-            
-                <span>MS SQL Server 盲注学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="延时型盲注"><a href="#延时型盲注" class="headerlink" title="延时型盲注"></a>延时型盲注</h2><h3 id="WAITFOR-DELAY-延时函数"><a href="#WAITFOR-DELAY-延时函数" class="headerlink" title="WAITFOR DELAY 延时函数"></a>WAITFOR DELAY 延时函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WAITFOR DELAY '0:0:4' <span class="comment">-- 表示延迟4秒</span></span><br></pre></td></tr></table></figure>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/30/MS-SQL-Errorbased-Notes/" >
-            
-                <span>MS SQL Server 报错注入笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="注入原理"><a href="#注入原理" class="headerlink" title="注入原理"></a>注入原理</h2><p>对于<code>convert(int,@@version)</code>，<code>convert</code>函数首先会执行第二个参数指定的SQL查询，然后尝试将查询结果转换 为int类型。但是，由于这个SQL查询的结果是varchar类型，无法进行指定的转换，所以，<code>convert</code>函数会抛出 一个SQL server错误消息，指出“SQL查询结果”无法转换为“int”类型，这样的话，攻击者就能得到的这个SQL查 询的结果了。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/30/MS-SQL-UNION-INJ-Notes/" >
-            
-                <span>MS SQL Sever 联合查询注入笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="判断是否为MSSQL"><a href="#判断是否为MSSQL" class="headerlink" title="判断是否为MSSQL"></a>判断是否为MSSQL</h2><p><code>and exists(select * from sysobjects) --</code></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/30/MySQL-Root-Notes/" >
-            
-                <span>MySQL注入Root权限处理学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="Root权限条件"><a href="#Root权限条件" class="headerlink" title="Root权限条件"></a>Root权限条件</h2><p>如果当前连接的mysql用户为<strong>root</strong>权限，在具有读写权限的前提下，我们是可以通过写入一句话木马到网站目录来获取网站权限的，也就是webshell。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/29/SQL-TimeBased-Blind/" >
-            
-                <span>基于Sqli-Labs的SQL时间盲注学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>当页面完全没有回显时用时间盲注。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/29/SQL-Bool-Blind/" >
-            
-                <span>基于DVWA的SQL布尔盲注学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="布尔盲注适用范围"><a href="#布尔盲注适用范围" class="headerlink" title="布尔盲注适用范围"></a>布尔盲注适用范围</h2><p>在联合查询和报错注入都不适用的情况下，考虑的一种手工注入方式。</p>
-<p>优点：遍历的方法可以准确查出数据。<br>缺点：过程繁琐。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/28/ErrorBased-SQL-Notes/" >
-            
-                <span>MySQL报错注入学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="报错注入原理"><a href="#报错注入原理" class="headerlink" title="报错注入原理"></a>报错注入原理</h2><p>报错注入用于没有显位的SQL注入，可以用来替代盲注。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "RF/Microwave">RF/Microwave</a>
     
 </div>
             
@@ -695,10 +392,6 @@
     </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/categories/Web%E5%AE%89%E5%85%A8/page/2/">2</a><a class="extend next" rel="next" href="/categories/Web%E5%AE%89%E5%85%A8/page/2/">NEXT &gt;</a>
-    </nav>
     
 </main>
             <!-- profile -->
