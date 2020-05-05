@@ -23,22 +23,28 @@
     <meta name="description" content="概述通常条件下，微波暗室很难配备，如何在没有微波暗室情况下测量天线的特性参数非常重要。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="天线实测方法笔记">
-<meta property="og:url" content="http://yoursite.com/2020/05/04/Antenna-Measurement-Note/index.html">
+<meta property="og:url" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/index.html">
 <meta property="og:site_name" content="Yi&#39;s Blog">
 <meta property="og:description" content="概述通常条件下，微波暗室很难配备，如何在没有微波暗室情况下测量天线的特性参数非常重要。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/05/04/Antenna-Measurement-Note/fig1.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/04/Antenna-Measurement-Note/fig2.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/04/Antenna-Measurement-Note/fig3.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/04/Antenna-Measurement-Note/fig4.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig1.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig2.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig3.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig4.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig5.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig6.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig7.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig8.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig9.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig10.png">
 <meta property="article:published_time" content="2020-05-05T02:53:31.000Z">
-<meta property="article:modified_time" content="2020-05-05T04:07:16.247Z">
+<meta property="article:modified_time" content="2020-05-05T15:19:20.774Z">
 <meta property="article:author" content="Yi">
 <meta property="article:tag" content="Antenna">
 <meta property="article:tag" content="天线测试">
 <meta property="article:tag" content="RF&#x2F;Microwave">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/05/04/Antenna-Measurement-Note/fig1.png">
+<meta name="twitter:image" content="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/fig1.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
@@ -233,7 +239,9 @@
 <meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
     
-        <body class="post-body">
+        
+            <body class="post-body" oncontextmenu="return false" ondragstart="return false" onselectstart="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()">
+        
     
     
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
@@ -306,7 +314,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">523</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">1.4k</span>Reading time: <span class="post-count reading-time">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -460,14 +468,52 @@ height:50vh;
 <li>方向图</li>
 </ul>
 <h2 id="无微波暗室时的测试评估"><a href="#无微波暗室时的测试评估" class="headerlink" title="无微波暗室时的测试评估"></a>无微波暗室时的测试评估</h2><h3 id="增益测试一"><a href="#增益测试一" class="headerlink" title="增益测试一"></a>增益测试一</h3><p><img src="./fig4.png" alt="Fig4"></p>
-<p>如图所示，两个被测天线，其中一个个可接信号发生器（或者射频模块）。例如，被测天线为443 MHz天线，发射端可接一个LoRa或者Si4463模块，把发射功率配置为15 dBm，默认天线效率为100%，在接收端频谱分析仪上课测得接收功率，假设此时接收功率测得-70 dBm，则发射到接收过程总损失为 LOS = 85 dBm。公式中，发射增益与接收增益相等，$G_T=G_R$。通过公式可以粗略算出天线增益。假设测试传输距离$D=1~\mathrm{km}$。</p>
+<p>如图所示，两个被测天线，其中一个个可接信号发生器（或者射频模块）。例如，被测天线为 443 MHz 天线，发射端可接一个LoRa或者Si4463模块，把发射功率配置为 15 dBm，默认天线效率为 100% ，在接收端频谱分析仪上课测得接收功率，假设此时接收功率测得 -70 dBm，则发射到接收过程总损失为 LOS = 85 dBm。公式中，发射增益与接收增益相等，$G_T=G_R$。通过公式可以粗略算出天线增益。假设测试传输距离$D=1~\mathrm{km}$。</p>
 <p>$$LOS-LOS_{air}=32.44+20\log_{10}{D_{km}}+20\log_{10}{f_{MHz}}-G_T-G_R$$</p>
 <p>$$85-35=32.44+20\lg{1}+20\lg{433}-2G_T$$</p>
 <p>$$G_T\approx G_R\approx 35.14~\mathrm{dB}$$</p>
+<p>测试时需要校准$LOS_{air}$的值，用标准天线（增益已知），假设天线增益为 2 dBi，此时发射功率为15 dBm，接收功率为 -60 dBm，则公式为：</p>
+<p>$$75-LOS_{air}=32.44+20\lg{1}+20\lg{433}-2*2$$</p>
+<p>可得到$LOS_{air}$的值，在相同的环境下，$LOS_{air}$的值不会改变，以这个值作为参考，可以获得较为理想的天线增益。</p>
+<p>总体来说，这个公式对天线增益的处理有限，只能作为一个评估值，根据天线性能需求，对设计天线有指导意义。</p>
+<h3 id="增益测试二"><a href="#增益测试二" class="headerlink" title="增益测试二"></a>增益测试二</h3><p><img src="./fig5.png" alt="Fig5"></p>
+<p>方法二是弗里斯传输共识（Friis transmission equation）的应用，测试结构拓扑与方法一相同。注意：功率所使用的单位为 W(瓦特)，增益单位不是 dBi。这个方法实测较为准确。实例如下：</p>
+<p><img src="./fig6.png" alt="Fig6"></p>
+<p>注：同轴线损耗也需要考虑，测试前须测量同轴线损耗。</p>
+<p>对于多频天线，例如WIFI天线，信号发生器设置不同的频率，进行多次测量，就可以测得不同频率下天线的增益。</p>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><ul>
+<li>方法一主要作为开发前的评估使用，方法二测试比较准确，更接近天线实际增益，作为设计天线后的测试指标。</li>
+<li>方法一与方法二差距并不大，约 2 dB左右。</li>
+<li>方法一使用频率进行计算，方法二使用波长进行计算，两者差距并不大。</li>
+</ul>
+<h3 id="接收灵敏度测试"><a href="#接收灵敏度测试" class="headerlink" title="接收灵敏度测试"></a>接收灵敏度测试</h3><h2 id="模块接收灵敏度测试"><a href="#模块接收灵敏度测试" class="headerlink" title="模块接收灵敏度测试"></a>模块接收灵敏度测试</h2><p><img src="./fig7.png" alt="Fig7"></p>
+<p>上图为测试拓扑链路，其中信号发生器直接接到模块接收天线处。假设信号发生器，当输出功率为 -119 dBm 时模块还可以接收到信号，-120 dBm 时就接收不到信号，则可以说模块的接收灵敏度为 -120 dBm。同样，信号发生器也可以使用发射模块代替。</p>
+<h3 id="天线接收灵敏度测试"><a href="#天线接收灵敏度测试" class="headerlink" title="天线接收灵敏度测试"></a>天线接收灵敏度测试</h3><p><img src="./fig8.png" alt="Fig8"></p>
+<p>上图为天线接收灵敏度测试方法。若测量天线时，接收模块已经达到接收灵敏度极限值，则可以说天线接收灵敏度大于接收模块接收灵敏度,若要进一步测试，则需要换更精密设备，如示波器或者频谱分析仪。通过频谱分析仪，可以看到信号的波动。</p>
+<p>例如：信号发生器发射功率为 -110 dBm，信道衰减为 30 dBm，此时接收天线完全接收不到信号，接收天线此时的接收功率为 -140 dBm。</p>
+<h2 id="天线方向图测试"><a href="#天线方向图测试" class="headerlink" title="天线方向图测试"></a>天线方向图测试</h2><h3 id="场强计测试法"><a href="#场强计测试法" class="headerlink" title="场强计测试法"></a>场强计测试法</h3><p><img src="./fig9.png" alt="Fig9"></p>
+<h3 id="增益测试法"><a href="#增益测试法" class="headerlink" title="增益测试法"></a>增益测试法</h3><p><img src="./fig10.png" alt="Fig10"></p>
+<h2 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h2><p>假设有一个Zigbee模块，设计一个蓝牙天线，发射功率为 5 dBm，中心频率为 2.45 GHz，要求可以传输 80 m，分析天线增益要求。假定接收模块为cc2540，接收灵敏度为 -100 dBm，假设空气损耗为 35 dB：</p>
+<p>$$105~\mathrm{dBm}-35=32.4+20\lg{2450}+20\lg{0.08}-2G_T$$</p>
+<p>$$G_T \approx -0.85~\mathrm{dBi}$$</p>
+<p>考虑天线极化方式，如果是线极化，则天线增益损耗一半，则实际增益值应为：</p>
+<p>$$G_T\approx -0.85+3\approx 2.15~\mathrm{dBi}$$</p>
+<p>极化损失一般是针对圆极化与线极化来说，天线极化方式相同，则损耗较小。</p>
+<p>假设标准天线增益为 2 dBi，发射功率为 5 dBm，芯片接收灵敏度为 -100 dBm，距离 80m，</p>
+<p>$$105~\mathrm{dBm}-LOS_{air}=32.4+20\lg{2450}+20\lg{0.08}-2*2$$</p>
+<p>$$LOS_{air}\approx 30.76~\mathrm{dB}$$</p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.bilibili.com/video/BV1V54y1X78Z" target="_blank" rel="noopener">天线的测试方法讲解</a></p>
 
     </article>
     <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="http://fecee.github.io">Yi</a>
+            <p>原文链接：<a href="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/">http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/</a>
+            <p>发表日期：<a href="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/">May 4th 2020, 10:53:31 pm</a>
+            <p>更新日期：<a href="http://fecee.github.io/2020/05/04/Antenna-Measurement-Note/">May 5th 2020, 11:19:20 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
@@ -590,7 +636,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电路特性参数测试"><span class="toc-number">2.</span> <span class="toc-text">电路特性参数测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ADS与网络分析仪联调"><span class="toc-number">2.1.</span> <span class="toc-text">ADS与网络分析仪联调</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#辐射特性参数测试"><span class="toc-number">3.</span> <span class="toc-text">辐射特性参数测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无微波暗室时的测试评估"><span class="toc-number">4.</span> <span class="toc-text">无微波暗室时的测试评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增益测试一"><span class="toc-number">4.1.</span> <span class="toc-text">增益测试一</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电路特性参数测试"><span class="toc-number">2.</span> <span class="toc-text">电路特性参数测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ADS与网络分析仪联调"><span class="toc-number">2.1.</span> <span class="toc-text">ADS与网络分析仪联调</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#辐射特性参数测试"><span class="toc-number">3.</span> <span class="toc-text">辐射特性参数测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无微波暗室时的测试评估"><span class="toc-number">4.</span> <span class="toc-text">无微波暗室时的测试评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增益测试一"><span class="toc-number">4.1.</span> <span class="toc-text">增益测试一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增益测试二"><span class="toc-number">4.2.</span> <span class="toc-text">增益测试二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较"><span class="toc-number">4.3.</span> <span class="toc-text">比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接收灵敏度测试"><span class="toc-number">4.4.</span> <span class="toc-text">接收灵敏度测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块接收灵敏度测试"><span class="toc-number">5.</span> <span class="toc-text">模块接收灵敏度测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#天线接收灵敏度测试"><span class="toc-number">5.1.</span> <span class="toc-text">天线接收灵敏度测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#天线方向图测试"><span class="toc-number">6.</span> <span class="toc-text">天线方向图测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#场强计测试法"><span class="toc-number">6.1.</span> <span class="toc-text">场强计测试法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增益测试法"><span class="toc-number">6.2.</span> <span class="toc-text">增益测试法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例分析"><span class="toc-number">7.</span> <span class="toc-text">实例分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">8.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -603,6 +649,10 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
     
     
     
@@ -1010,17 +1060,17 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
-    
-        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
-    
-        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
-    
         <span class="sidebar-tag-name" data-tags="Antenna"><span class="iconfont-archer">&#xe606;</span>Antenna</span>
     
         <span class="sidebar-tag-name" data-tags="天线测试"><span class="iconfont-archer">&#xe606;</span>天线测试</span>
     
         <span class="sidebar-tag-name" data-tags="RF/Microwave"><span class="iconfont-archer">&#xe606;</span>RF/Microwave</span>
+    
+        <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
@@ -1069,9 +1119,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
-    
         <span class="sidebar-category-name" data-categories="Antenna"><span class="iconfont-archer">&#xe60a;</span>Antenna</span>
+    
+        <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
     
         <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
     
