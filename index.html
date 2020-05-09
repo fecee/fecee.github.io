@@ -379,6 +379,72 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/05/09/PHP-Pseudo-protocol/" >
+            
+                <span>PHP-Pseudo-protocol</span>
+        </a>
+        <div class="abstract-content">
+            <p>最近做攻防世界的CTF题时，遇到了有关PHP伪协议的知识。Web_php_include考察的是文件包含的知识。本文整理了网络上的解题思路以及伪协议的相关知识。</p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/09</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/05/01/MS-SQL-Blind-Notes/" >
+            
+                <span>MS SQL Server 盲注学习笔记</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="延时型盲注"><a href="#延时型盲注" class="headerlink" title="延时型盲注"></a>延时型盲注</h2><h3 id="WAITFOR-DELAY-延时函数"><a href="#WAITFOR-DELAY-延时函数" class="headerlink" title="WAITFOR DELAY 延时函数"></a>WAITFOR DELAY 延时函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WAITFOR DELAY '0:0:4' <span class="comment">-- 表示延迟4秒</span></span><br></pre></td></tr></table></figure>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/01</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/05/04/sqli-labs-notes/" >
             
                 <span>Sqli-labs 通关笔记 (持续更新)</span>
@@ -637,82 +703,6 @@ height:50vh;
         <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/03/MS-SQL-DB-OWNER-Notes/" >
-            
-                <span>MS SQL Server db_owner 权限处理学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="权限判断"><a href="#权限判断" class="headerlink" title="权限判断"></a>权限判断</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">and 1=(<span class="keyword">select</span> IS_SRVROLEMEMBER(<span class="string">'sysadmin'</span>)) //判断是否是系统管理员</span><br><span class="line"><span class="keyword">and</span> <span class="number">1</span>=(<span class="keyword">Select</span> IS_MEMBER(<span class="string">'db_owner'</span>)) //判断是否是库权限</span><br><span class="line"><span class="keyword">and</span> <span class="number">1</span>= (<span class="keyword">Select</span> HAS_DBACCESS(<span class="string">'master'</span>)) //判断是否有库读取权限</span><br></pre></td></tr></table></figure>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/DVWA-SQL-Notes/" >
-            
-                <span>基于DVWA的SQL联合查询注入学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="联合查询注入基本流程"><a href="#联合查询注入基本流程" class="headerlink" title="联合查询注入基本流程"></a>联合查询注入基本流程</h2><ol>
-<li><p>判断是否存在注入（数字型还是字符型）</p>
-<ol>
-<li><p>单引号法：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>逻辑法：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">and 1=1</span><br><span class="line">and 1=2</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>1</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>运算法</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-1</span><br><span class="line">-0</span><br></pre></td></tr></table></figure>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
     
 </div>
             
@@ -1034,9 +1024,26 @@ height:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 19
+        Total : 20
         </div>
         <!-- search  -->
         
@@ -1049,6 +1056,11 @@ height:50vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2020/05/09/PHP-Pseudo-protocol/" >PHP-Pseudo-protocol</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1158,15 +1170,17 @@ height:50vh;
     
         <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
     
-        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
-    
-        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
-    
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
         <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
@@ -1214,6 +1228,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
     
         <span class="sidebar-category-name" data-categories="Web安全/SQL注入"><span class="iconfont-archer">&#xe60a;</span>Web安全/SQL注入</span>
+    
+        <span class="sidebar-category-name" data-categories="Web安全/CTF"><span class="iconfont-archer">&#xe60a;</span>Web安全/CTF</span>
     
         <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
     
