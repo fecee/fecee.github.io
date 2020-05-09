@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="Yi&#39;s Blog">
-<meta property="og:url" content="http://fecee.github.io/archives/page/3/index.html">
+<meta property="og:url" content="http://fecee.github.io/categories/Web%E5%AE%89%E5%85%A8/SQL%E6%B3%A8%E5%85%A5/page/2/index.html">
 <meta property="og:site_name" content="Yi&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yi">
@@ -366,131 +366,37 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/22/WEB%E9%80%9A%E4%BF%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
+        <a class="abstract-title" href = "/2020/04/27/DVWA-SQL-Notes/" >
             
-                <span>WEB通信学习笔记</span>
+                <span>基于DVWA的SQL联合查询注入学习笔记</span>
         </a>
         <div class="abstract-content">
-            <h2 id="资源定位"><a href="#资源定位" class="headerlink" title="资源定位"></a>资源定位</h2><p>DNS(Domain Name System，域名系统)，用于解析域名获得IP地址。DNS协议运行在UDP协议之上，使用端口号53。</p>
-<p>系统会首先查找本地DNS缓存和hosts文件信息，如果没有相关域名对应IP，则会发送给本机指定DNS服务器。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
-            
-                <span>HTTP协议学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="HTTP与HTTPS"><a href="#HTTP与HTTPS" class="headerlink" title="HTTP与HTTPS"></a>HTTP与HTTPS</h2><p>HTTP = HTTP + SSL。HTTPS在HTTP应用层的基础上使用安全套接字层作为子层。</p>
-<p>主要区别：</p>
-<ul>
-<li>HTTP标准端口是80，而HTTPS的标准端口是443。</li>
-<li>若不做任何处理，HTTP协议可以直接抓包，HTTPS则不行。</li>
-<li>在OSI网络模型中，HTTP工作与应用层，而HTTPS在传输层。</li>
-<li>HTTP 无需加密，而 HTTPS 对传输的数据进行加密。</li>
-<li>HTTP 无需证书，而 HTTPS 需要认证证书（SSL证书）。</li>
-</ul>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >
-            
-                <span>PHP入门笔记1</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
-<li><p>PHP 语句以分号结尾（;）。PHP 代码块的关闭标签也会自动表明分号（因此在 PHP 代码块的最后一行不必使用分号）。</p>
+            <h2 id="联合查询注入基本流程"><a href="#联合查询注入基本流程" class="headerlink" title="联合查询注入基本流程"></a>联合查询注入基本流程</h2><ol>
+<li><p>判断是否存在注入（数字型还是字符型）</p>
+<ol>
+<li><p>单引号法：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>在 PHP 中，所有用户定义的函数、类和关键词（例如 if、else、echo 等等）都对大小写不敏感；不过在 PHP 中，所有变量都对大小写敏感。</p>
+<li><p>逻辑法：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">and 1=1</span><br><span class="line">and 1=2</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>1</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>2</span><br></pre></td></tr></table></figure>
 </li>
-</ul>
+<li><p>运算法</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-1</span><br><span class="line">-0</span><br></pre></td></tr></table></figure>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web基础">Web基础</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/21/Mac%E4%B8%8B%E5%88%A9%E7%94%A8MAMP%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAPHP%E7%8E%AF%E5%A2%83/" >
-            
-                <span>Mac下利用MAMP快速搭建PHP环境</span>
-        </a>
-        <div class="abstract-content">
-            下载安装MAMP解压完dmg文件后，你的桌面会多出一个小图标 ，点击它，进入界面后，来到最下面找到installer图标，点击进入安装，然后一路next即可。
-使用打开Launchpad中灰色的MAMP，进入界面后，点击Preferences, 点击Set Web &amp; MySQL ports to 80 &amp; 3306。然后点击MAPP界面中的Start Servers，开启服务。
-这时候，在浏览器中输入127.0.0.1或者localhost将会显示一个带有大象的页面。代表服务器已启动成功，并且把htdocs文件夹下的index.php显示了出来!
-服务器路径MAMP下h...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/21</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
     
 </div>
             
@@ -500,7 +406,7 @@
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/page/2/">&lt; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
+        <a class="extend prev" rel="prev" href="/categories/Web%E5%AE%89%E5%85%A8/SQL%E6%B3%A8%E5%85%A5/">&lt; PREV</a><a class="page-number" href="/categories/Web%E5%AE%89%E5%85%A8/SQL%E6%B3%A8%E5%85%A5/">1</a><span class="page-number current">2</span>
     </nav>
     
 </main>
@@ -770,76 +676,9 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 24
+        Total : 19
         </div>
         <!-- search  -->
         
@@ -920,11 +759,6 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-Pro-Install/" >Burpsuite Pro 2.1.05 破解版安装教程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Burpsuite-notes/" >BurpSuite入门笔记</a>
         </li>
     
@@ -940,22 +774,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/%E6%9C%AC%E5%9C%B0%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" >本地靶场搭建笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >MySQL学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B02/" >PHP入门笔记2</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/WEB%E9%80%9A%E4%BF%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >WEB通信学习笔记</a>
         </li>
     
     
@@ -965,12 +784,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >PHP入门笔记1</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2020/04/21/Mac%E4%B8%8B%E5%88%A9%E7%94%A8MAMP%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BAPHP%E7%8E%AF%E5%A2%83/" >Mac下利用MAMP快速搭建PHP环境</a>
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >PHP入门笔记</a>
         </li>
     
     </div>
@@ -1040,6 +854,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Antenna"><span class="iconfont-archer">&#xe60a;</span>Antenna</span>
     
         <span class="sidebar-category-name" data-categories="Web安全"><span class="iconfont-archer">&#xe60a;</span>Web安全</span>
+    
+        <span class="sidebar-category-name" data-categories="Web安全/SQL注入"><span class="iconfont-archer">&#xe60a;</span>Web安全/SQL注入</span>
     
         <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
     
