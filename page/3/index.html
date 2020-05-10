@@ -11,7 +11,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
     <meta name="author" content="Yi">
     <meta name="renderer" content="webkit">
@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="Yi&#39;s Blog">
-<meta property="og:url" content="http://fecee.github.io/archives/index.html">
+<meta property="og:url" content="http://fecee.github.io/page/3/index.html">
 <meta property="og:site_name" content="Yi&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Yi">
@@ -85,8 +85,6 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
-    
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -218,13 +216,15 @@
     
     <!-- 谷歌统计  -->
     
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
     
         
+            <body class="home-body" oncontextmenu="return false" ondragstart="return false" onselectstart="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()">
+        
     
     
-<header class="header">
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header index-header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -240,21 +240,34 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/egan-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            Yi's Blog
+            <!-- 文章页  -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
+            
+            
+                “Never confuse education with intelligence, you can have a PhD and still be an idiot.” ― Richard P. Feynman
+            
+            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -366,327 +379,31 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/10/DirScan-Notes/" >
+        <a class="abstract-title" href = "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
             
-                <span>目录扫描学习笔记</span>
+                <span>HTTP协议学习笔记</span>
         </a>
         <div class="abstract-content">
-            <p>目录扫描是Web渗透过程中信息搜集的重要部分。通过目录扫描，能找到更多有价值的信息，这些信息可能是我们无法直接从网站前台获取到的。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "目录扫描">目录扫描</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/09/PHP-Pseudo-protocol/" >
-            
-                <span>PHP-Pseudo-protocol</span>
-        </a>
-        <div class="abstract-content">
-            <p>最近做攻防世界的CTF题时，遇到了有关PHP伪协议的知识。Web_php_include考察的是文件包含的知识。本文整理了网络上的解题思路以及伪协议的相关知识。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/06/SQL-DNS-INJEC-Notes/" >
-            
-                <span>SQL注入DNSLog学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="DNSlog解释"><a href="#DNSlog解释" class="headerlink" title="DNSlog解释"></a>DNSlog解释</h2><p>在SQL盲注过程中，手工注入非常耗时，除了使用sqlmap，还可以利用DNSLog获取数据。简单理解就是在某些无法直接利用漏洞获得回显的情况下，但是目标可以发起DNS请求，这个时候就可以通过这种方式把想获得的数据外带出来。具体原理可以参考这篇文献<a href="https://arxiv.org/ftp/arxiv/papers/1303/1303.3047.pdf" target="_blank" rel="noopener">Data Retrieval over DNS in SQL Injection Attacks</a>。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/04/Antenna-Measurement-Note/" >
-            
-                <span>天线实测方法笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>通常条件下，微波暗室很难配备，如何在没有微波暗室情况下测量天线的特性参数非常重要。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Antenna">Antenna</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "天线测试">天线测试</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "RF/Microwave">RF/Microwave</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/04/sqli-labs-notes/" >
-            
-                <span>Sqli-labs 通关笔记 (持续更新)</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="Enviroment"><a href="#Enviroment" class="headerlink" title="Enviroment"></a>Enviroment</h2><p>为了方便搭建，本文使用vulstudy搭建sqli-labs环境。搭建方法参考链接：<a href="https://github.com/c0ny1/vulstudy" target="_blank" rel="noopener">Vulstudy</a>。在实际练习中，也参考了网络上的解析文章，参考链接附在文末。关于Sqli-labs，作者Audi本人做了非常详细的教学视频，可以参考学习，视频连接：<a href="http://www.securitytube.net/user/Audi" target="_blank" rel="noopener">Audi’s Sqli-Labs Series</a>。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/03/MS-SQL-DB-OWNER-Notes/" >
-            
-                <span>MS SQL Server db_owner 权限处理学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="权限判断"><a href="#权限判断" class="headerlink" title="权限判断"></a>权限判断</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">and 1=(<span class="keyword">select</span> IS_SRVROLEMEMBER(<span class="string">'sysadmin'</span>)) //判断是否是系统管理员</span><br><span class="line"><span class="keyword">and</span> <span class="number">1</span>=(<span class="keyword">Select</span> IS_MEMBER(<span class="string">'db_owner'</span>)) //判断是否是库权限</span><br><span class="line"><span class="keyword">and</span> <span class="number">1</span>= (<span class="keyword">Select</span> HAS_DBACCESS(<span class="string">'master'</span>)) //判断是否有库读取权限</span><br></pre></td></tr></table></figure>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/02/MS-SQL-Sa-Notes/" >
-            
-                <span>MS SQL Server Sa 权限处理学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="MSSQL-权限处理"><a href="#MSSQL-权限处理" class="headerlink" title="MSSQL 权限处理"></a>MSSQL 权限处理</h2><p>sa全称：<code>sysadmin</code></p>
-<p>3个权限：<code>sysadmin</code>，<code>db_owner</code>，<code>public</code></p>
-<p>sa权限的处理方法：</p>
+            <h2 id="HTTP与HTTPS"><a href="#HTTP与HTTPS" class="headerlink" title="HTTP与HTTPS"></a>HTTP与HTTPS</h2><p>HTTP = HTTP + SSL。HTTPS在HTTP应用层的基础上使用安全套接字层作为子层。</p>
+<p>主要区别：</p>
 <ul>
-<li>写 webshell</li>
-<li>下载执行<code>反向远程控制服务端</code></li>
-<li>添加用户（不推荐）</li>
+<li>HTTP标准端口是80，而HTTPS的标准端口是443。</li>
+<li>若不做任何处理，HTTP协议可以直接抓包，HTTPS则不行。</li>
+<li>在OSI网络模型中，HTTP工作与应用层，而HTTPS在传输层。</li>
+<li>HTTP 无需加密，而 HTTPS 对传输的数据进行加密。</li>
+<li>HTTP 无需证书，而 HTTPS 需要认证证书（SSL证书）。</li>
 </ul>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/02</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/01/MS-SQL-Blind-Notes/" >
-            
-                <span>MS SQL Server 盲注学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="延时型盲注"><a href="#延时型盲注" class="headerlink" title="延时型盲注"></a>延时型盲注</h2><h3 id="WAITFOR-DELAY-延时函数"><a href="#WAITFOR-DELAY-延时函数" class="headerlink" title="WAITFOR DELAY 延时函数"></a>WAITFOR DELAY 延时函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WAITFOR DELAY '0:0:4' <span class="comment">-- 表示延迟4秒</span></span><br></pre></td></tr></table></figure>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/30/MS-SQL-Errorbased-Notes/" >
-            
-                <span>MS SQL Server 报错注入笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="注入原理"><a href="#注入原理" class="headerlink" title="注入原理"></a>注入原理</h2><p>对于<code>convert(int,@@version)</code>，<code>convert</code>函数首先会执行第二个参数指定的SQL查询，然后尝试将查询结果转换 为int类型。但是，由于这个SQL查询的结果是varchar类型，无法进行指定的转换，所以，<code>convert</code>函数会抛出 一个SQL server错误消息，指出“SQL查询结果”无法转换为“int”类型，这样的话，攻击者就能得到的这个SQL查 询的结果了。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/30/MS-SQL-UNION-INJ-Notes/" >
-            
-                <span>MS SQL Sever 联合查询注入笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="判断是否为MSSQL"><a href="#判断是否为MSSQL" class="headerlink" title="判断是否为MSSQL"></a>判断是否为MSSQL</h2><p><code>and exists(select * from sysobjects) --</code></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
     
 </div>
             
@@ -696,11 +413,53 @@
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">NEXT &gt;</a>
+        <a class="extend prev" rel="prev" href="/page/2/">&lt; PREV</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
     </nav>
     
 </main>
             <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" alt="avatar" src= https://avatars3.githubusercontent.com/u/26248716?s=400&u=e29875084a773e149c9d28f4f8922f2031dfac58&v=4 >
+    <div class="profile-name">Yi</div>
+    
+    
+    <div class="profile-social">
+        
+    
+        
+            
+                <a href="mailto:fecee.h@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fecee" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+
+    </div>
+    
+    
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                
+                    <span>
+                        <a href= https://www.dark5.net target="_black">5号黯区</a>
+                    </span>
+                
+            
+        </div>
+    
+    
+        <div class="about-me">
+            <a href = "/about" >ABOUT ME</a>
+        </div>
+    
+</div>
             
         </div>
         <footer class="footer footer-unloaded">
@@ -1230,7 +989,7 @@ jsonContent:
     <!-- CNZZ  -->
     
     </div>
-    <!-- async load share.js -->
+    <!-- async load share.js --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
      
     </body>
 </html>

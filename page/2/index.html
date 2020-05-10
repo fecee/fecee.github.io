@@ -379,6 +379,39 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/04/30/MS-SQL-Errorbased-Notes/" >
+            
+                <span>MS SQL Server 报错注入笔记</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="注入原理"><a href="#注入原理" class="headerlink" title="注入原理"></a>注入原理</h2><p>对于<code>convert(int,@@version)</code>，<code>convert</code>函数首先会执行第二个参数指定的SQL查询，然后尝试将查询结果转换 为int类型。但是，由于这个SQL查询的结果是varchar类型，无法进行指定的转换，所以，<code>convert</code>函数会抛出 一个SQL server错误消息，指出“SQL查询结果”无法转换为“int”类型，这样的话，攻击者就能得到的这个SQL查 询的结果了。</p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/30</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/05/03/MS-SQL-DB-OWNER-Notes/" >
             
                 <span>MS SQL Server db_owner 权限处理学习笔记</span>
@@ -699,47 +732,10 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
-            
-                <span>HTTP协议学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="HTTP与HTTPS"><a href="#HTTP与HTTPS" class="headerlink" title="HTTP与HTTPS"></a>HTTP与HTTPS</h2><p>HTTP = HTTP + SSL。HTTPS在HTTP应用层的基础上使用安全套接字层作为子层。</p>
-<p>主要区别：</p>
-<ul>
-<li>HTTP标准端口是80，而HTTPS的标准端口是443。</li>
-<li>若不做任何处理，HTTP协议可以直接抓包，HTTPS则不行。</li>
-<li>在OSI网络模型中，HTTP工作与应用层，而HTTPS在传输层。</li>
-<li>HTTP 无需加密，而 HTTPS 对传输的数据进行加密。</li>
-<li>HTTP 无需证书，而 HTTPS 需要认证证书（SSL证书）。</li>
-</ul>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+        <a class="extend prev" rel="prev" href="/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -1068,9 +1064,26 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 20
+        Total : 21
         </div>
         <!-- search  -->
         
@@ -1083,6 +1096,11 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href= "/2020/05/10/DirScan-Notes/" >目录扫描学习笔记</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1197,13 +1215,15 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
         <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
     
+        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
+    
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
-        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
-    
-        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+        <span class="sidebar-tag-name" data-tags="目录扫描"><span class="iconfont-archer">&#xe606;</span>目录扫描</span>
     
         <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
     
