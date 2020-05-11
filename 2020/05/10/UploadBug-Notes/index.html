@@ -20,15 +20,15 @@
     <meta name="keywords" content="Yi's Blog,Yi">
     
     <meta name="description" content="">
-    <meta name="description" content="文件上传漏洞可以说是日常渗透测试用得最多的一个漏洞，因为用它获得服务器权限最快最直接。">
+    <meta name="description" content="文件上传漏洞可以说是日常渗透测试用得最多的一个漏洞，因为用它获得服务器权限最快最直接。  特点：利用简单，危害大。 产生原因：缺少必要的校验">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UploadBug_Notes">
+<meta property="og:title" content="文件上传漏洞学习笔记">
 <meta property="og:url" content="http://fecee.github.io/2020/05/10/UploadBug-Notes/index.html">
 <meta property="og:site_name" content="Yi&#39;s Blog">
-<meta property="og:description" content="文件上传漏洞可以说是日常渗透测试用得最多的一个漏洞，因为用它获得服务器权限最快最直接。">
+<meta property="og:description" content="文件上传漏洞可以说是日常渗透测试用得最多的一个漏洞，因为用它获得服务器权限最快最直接。  特点：利用简单，危害大。 产生原因：缺少必要的校验">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-10T20:55:16.000Z">
-<meta property="article:modified_time" content="2020-05-10T22:02:14.639Z">
+<meta property="article:modified_time" content="2020-05-11T04:26:11.537Z">
 <meta property="article:author" content="Yi">
 <meta property="article:tag" content="Web安全">
 <meta property="article:tag" content="上传漏洞">
@@ -36,7 +36,7 @@
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>UploadBug_Notes · Yi&#39;s Blog</title>
+    <title>文件上传漏洞学习笔记 · Yi&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -243,7 +243,7 @@
                 <a href="/" >Yi&#39;s Blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">UploadBug_Notes</a>
+                <a href="#" class="post-name">文件上传漏洞学习笔记</a>
             </div>
     </div>
     
@@ -273,7 +273,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            UploadBug_Notes
+            文件上传漏洞学习笔记
             <!-- 404 -->
             
         </h1>
@@ -300,7 +300,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">246</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">829</span>Reading time: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -418,13 +418,13 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <p>文件上传漏洞可以说是日常渗透测试用得最多的一个漏洞，因为用它获得服务器权限最快最直接。</p>
-<a id="more"></a>
-
 <ul>
 <li>特点：利用简单，危害大。</li>
-<li>产生原因：缺少必要的校验</li>
+<li>产生原因：缺少必要的校验<a id="more"></a>
+
+</li>
 </ul>
-<p>找文件上传点（关键）：</p>
+<p><strong>找文件上传点（关键）</strong>：</p>
 <ul>
 <li>管理后台页面</li>
 <li>用户后台页面</li>
@@ -442,7 +442,126 @@ height:50vh;
 <li>浏览器禁用 JavaScript 脚本</li>
 </ul>
 <h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>uppload-labs Pass-01</p>
+<h2 id="文件内容检查的突破"><a href="#文件内容检查的突破" class="headerlink" title="文件内容检查的突破"></a>文件内容检查的突破</h2><ul>
+<li>Content-type检查</li>
+<li>文件头检查</li>
+<li><code>getimagesize()</code>检查</li>
+<li><code>php_exif</code>模块检查</li>
+<li><code>imagecreatefromjpeg</code>二次渲染</li>
+</ul>
+<h3 id="文件内容检查测试流程"><a href="#文件内容检查测试流程" class="headerlink" title="文件内容检查测试流程"></a>文件内容检查测试流程</h3><ol>
+<li>上传一张正常图片，验证上传功能是否正常</li>
+<li>最好直接上传一张图片马，可绕过<code>content-type</code>，文件头，<code>getimagesize()</code>，<code>php_exif</code>检查</li>
+<li>针对二次渲染，寻找图片数据中不会被转换的部分，将代码插入其中</li>
+</ol>
+<h3 id="content-type-检查"><a href="#content-type-检查" class="headerlink" title="content-type 检查"></a>content-type 检查</h3><p>抓包将<code>content-type</code>改为图片形式（即’image/png’等），即可成功上传。</p>
+<p>常见的MIME类型：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">text/html: HTML格式</span><br><span class="line">text/plain: 纯文本格式</span><br><span class="line">text/xml: XML格式</span><br><span class="line">image/gif: gif图片格式</span><br><span class="line">image/jpeg: jpg图片格式</span><br><span class="line">image/png: png图片格式</span><br><span class="line"></span><br><span class="line">以application开头的媒体格式类型：</span><br><span class="line"></span><br><span class="line">application/xhtml+xml: XHTML格式</span><br><span class="line">application/xml: XML数据格式</span><br><span class="line">application/atom+xml: Atom XML聚合格式</span><br><span class="line">application/json: JSON数据格式</span><br><span class="line">application/pdf: pdf格式</span><br><span class="line">application/msword: Word文档格式</span><br><span class="line">application/octet-stream: 二进制流数据（如常见的文件下载）</span><br><span class="line">application/x-www-form-urlencoded: <span class="tag">&lt;<span class="name">form</span> <span class="attr">encType</span>=<span class="string">””</span>&gt;</span>中默认的encType，form表单数据被编码为key/value格式发送到服务器（表单默认的提交数据的格式）</span><br><span class="line"></span><br><span class="line">另外一种常见的媒体格式是上传文件之时使用的：</span><br><span class="line"></span><br><span class="line">multipart/form-data: 需要在表单中进行文件上传时，就需要使用该格式</span><br></pre></td></tr></table></figure>
 
+<p>实例：uppload-labs Pass-02</p>
+<h3 id="文件头检查绕过"><a href="#文件头检查绕过" class="headerlink" title="文件头检查绕过"></a>文件头检查绕过</h3><ul>
+<li>在文件头添加<ul>
+<li>.gif, “GIF89A” <code>47 49 46 38 39 61</code></li>
+<li>.JPEG;.JPE;.JPG，”JPGGraphicFile” <code>FF D8 FF E0 00 10 4A 46 49 46</code></li>
+<li>.PNG <code>89 50 4E 47 0D 0A 1A 0A</code></li>
+</ul>
+</li>
+<li>图片一句话</li>
+<li>结合文件包含漏洞或者解析漏洞</li>
+</ul>
+<p>其他类型的文件头</p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>文件头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TIFF (tif)</td>
+<td>49492A00</td>
+</tr>
+<tr>
+<td>Windows Bitmap (bmp)</td>
+<td>424D</td>
+</tr>
+<tr>
+<td>CAD (dwg)</td>
+<td>41433130</td>
+</tr>
+<tr>
+<td>Adobe Photoshop (psd)</td>
+<td>38425053</td>
+</tr>
+<tr>
+<td>Rich Text Format (rtf)</td>
+<td>7B5C727466</td>
+</tr>
+<tr>
+<td>MS Word/Excel (xls.or.doc)</td>
+<td>D0CF11E0</td>
+</tr>
+<tr>
+<td>MS Access (mdb)</td>
+<td>5374616E64617264204A</td>
+</tr>
+<tr>
+<td>ZIP Archive (zip)</td>
+<td>504B0304</td>
+</tr>
+<tr>
+<td>RAR Archive (rar)</td>
+<td>52617221</td>
+</tr>
+<tr>
+<td>Wave (wav)</td>
+<td>57415645</td>
+</tr>
+<tr>
+<td>AVI (avi)</td>
+<td>41564920</td>
+</tr>
+<tr>
+<td>Real Media (rm)</td>
+<td>2E524D46</td>
+</tr>
+<tr>
+<td>MPEG (mpg)</td>
+<td>000001BA</td>
+</tr>
+<tr>
+<td>MPEG (mpg)</td>
+<td>000001B3</td>
+</tr>
+<tr>
+<td>Quicktime (mov)</td>
+<td>6D6F6F76</td>
+</tr>
+<tr>
+<td>Adobe Acrobat (pdf)</td>
+<td>255044462D312E</td>
+</tr>
+<tr>
+<td>Windows Media (asf)</td>
+<td>3026B2758E66CF11</td>
+</tr>
+<tr>
+<td>MIDI (mid)</td>
+<td>4D546864</td>
+</tr>
+</tbody></table>
+<p>实例：</p>
+<ul>
+<li>uppload-labs Pass-13</li>
+<li>uppload-labs Pass-14 <code>getimagesize()</code></li>
+<li>uppload-labs Pass-14 <code>php_exif需要开启</code></li>
+</ul>
+<h3 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h3><p>imagecreatefromjpeg 实例：uppload-labs Pass-16</p>
+<p>绕过方式：寻找渲染前后不变的地方，替换成一句话。最好用比对的工具做对比，例如二次渲染木马生成器，或者写一个脚本文件比较前后区别。</p>
+<p><a href="https://secgeek.net/bookfresh-vulnerability/" target="_blank" rel="noopener">参考链接</a></p>
+<p><a href="https://xz.aliyun.com/t/2657" target="_blank" rel="noopener">pass16详细分析</a></p>
+<p><a href="https://github.com/gwjczwy/jpg_payload" target="_blank" rel="noopener">jpg_payload</a></p>
+<h2 id="白名单验证的突破"><a href="#白名单验证的突破" class="headerlink" title="白名单验证的突破"></a>白名单验证的突破</h2>
     </article>
     <!-- license  -->
     
@@ -450,7 +569,7 @@ height:50vh;
             <p>Author: <a href="http://fecee.github.io">Yi</a>
             <p>Article Link:: <a href="http://fecee.github.io/2020/05/10/UploadBug-Notes/">http://fecee.github.io/2020/05/10/UploadBug-Notes/</a>
             <p>Publication Date: <a href="http://fecee.github.io/2020/05/10/UploadBug-Notes/">May 10th 2020, 4:55:16 pm</a>
-            <p>Last Update: <a href="http://fecee.github.io/2020/05/10/UploadBug-Notes/">May 10th 2020, 6:02:14 pm</a>
+            <p>Last Update: <a href="http://fecee.github.io/2020/05/10/UploadBug-Notes/">May 11th 2020, 12:26:11 am</a>
             <p>Copyright Notice: With the exception of the special statement at the beginning of the article, all articles can be reprinted in accordance with the <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0 agreement</a> with the author's permission.</p>
         </div>
     
@@ -544,7 +663,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端验证突破"><span class="toc-number">1.</span> <span class="toc-text">前端验证突破</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断为前端验证"><span class="toc-number">1.1.</span> <span class="toc-text">判断为前端验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过前端验证"><span class="toc-number">1.2.</span> <span class="toc-text">绕过前端验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">1.3.</span> <span class="toc-text">实例</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端验证突破"><span class="toc-number">1.</span> <span class="toc-text">前端验证突破</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断为前端验证"><span class="toc-number">1.1.</span> <span class="toc-text">判断为前端验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过前端验证"><span class="toc-number">1.2.</span> <span class="toc-text">绕过前端验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">1.3.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件内容检查的突破"><span class="toc-number">2.</span> <span class="toc-text">文件内容检查的突破</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件内容检查测试流程"><span class="toc-number">2.1.</span> <span class="toc-text">文件内容检查测试流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#content-type-检查"><span class="toc-number">2.2.</span> <span class="toc-text">content-type 检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件头检查绕过"><span class="toc-number">2.3.</span> <span class="toc-text">文件头检查绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二次渲染"><span class="toc-number">2.4.</span> <span class="toc-text">二次渲染</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#白名单验证的突破"><span class="toc-number">3.</span> <span class="toc-text">白名单验证的突破</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -557,10 +676,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
     
     
     
@@ -837,7 +952,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href= "/2020/05/10/UploadBug-Notes/" >UploadBug_Notes</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href= "/2020/05/10/UploadBug-Notes/" >文件上传漏洞学习笔记</a>
         </li>
     
     
@@ -960,9 +1075,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
-        <span class="sidebar-tag-name" data-tags="目录扫描"><span class="iconfont-archer">&#xe606;</span>目录扫描</span>
-    
         <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
+    
+        <span class="sidebar-tag-name" data-tags="目录扫描"><span class="iconfont-archer">&#xe606;</span>目录扫描</span>
     
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
@@ -970,17 +1085,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
     
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
-        <span class="sidebar-tag-name" data-tags="上传漏洞"><span class="iconfont-archer">&#xe606;</span>上传漏洞</span>
+        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
     
         <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
     
-        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
+        <span class="sidebar-tag-name" data-tags="上传漏洞"><span class="iconfont-archer">&#xe606;</span>上传漏洞</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1021,9 +1136,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Web安全/SQL注入"><span class="iconfont-archer">&#xe60a;</span>Web安全/SQL注入</span>
     
-        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
-    
         <span class="sidebar-category-name" data-categories="Web安全/CTF"><span class="iconfont-archer">&#xe60a;</span>Web安全/CTF</span>
+    
+        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
     
         <span class="sidebar-category-name" data-categories="Web安全/上传漏洞"><span class="iconfont-archer">&#xe60a;</span>Web安全/上传漏洞</span>
     
