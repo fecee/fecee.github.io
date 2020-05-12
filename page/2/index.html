@@ -379,6 +379,39 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/04/30/MS-SQL-UNION-INJ-Notes/" >
+            
+                <span>MS SQL Sever 联合查询注入笔记</span>
+        </a>
+        <div class="abstract-content">
+            <h2 id="判断是否为MSSQL"><a href="#判断是否为MSSQL" class="headerlink" title="判断是否为MSSQL"></a>判断是否为MSSQL</h2><p><code>and exists(select * from sysobjects) --</code></p>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/30</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MSSQL">MSSQL</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/05/02/MS-SQL-Sa-Notes/" >
             
                 <span>MS SQL Server Sa 权限处理学习笔记</span>
@@ -625,41 +658,6 @@ height:50vh;
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/25/Burpsuite-notes/" >
-            
-                <span>BurpSuite入门笔记</span>
-        </a>
-        <div class="abstract-content">
-            Spider网站爬行顺序：Proxy抓取请求 -&gt; 发送到Repeater -&gt; 发送到Spider -&gt; 开始爬取网站 -&gt; 在Target中可查看结果。
-爬行网站线程数可以设置为2-10，大型网站可以更多。
-Scanner漏洞扫描，在扫描之前需要做一个Spider。
-roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选择Active scan this host -&gt; Do an active scan。
-参考资料burp suite超级详解Burp Suite渗透操作指南–暴力破解Burp Suite渗...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "BurpSuite">BurpSuite</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href = "/2020/04/22/PHP%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" >
             
                 <span>PHP入门笔记</span>
@@ -696,32 +694,38 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/24/BurpSuite-localhost-data/" >
+        <a class="abstract-title" href = "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
             
-                <span>BurpSuite无法抓取本地包的解决方案</span>
+                <span>MySQL学习笔记</span>
         </a>
         <div class="abstract-content">
-            本地电脑系统是Mac OS Catalina 10.15.4，用Chrome、火狐都不能抓部署在本地的网站的包，可能是本机系统有设置代理时过滤”127.0.0.1”和”localhost”。
-解决方案：
-
-确保配置浏览器代理时，去掉勾选”过滤本机IP地址“选项。
-可以使用本机IP（192.168.xxx.xxx）代替“127.0.0.1”访问页面。
-另一种方法：可以修改本地hosts文件，将本机IP指向“127.0.0.1”或者绑定一个域名到“127.0.0.1”也可以解决。
-
-
+            <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p><strong>关系型数据库</strong>(RDBMS) 术语:</p>
+<ul>
+<li>冗余：存储两倍数据，冗余降低了性能，但提高了数据的安全性。</li>
+<li>主键：<font color=orangered>主键是唯一的</font>。一个数据表中只能包含一个主键。你可以使用主键来查询数据。</li>
+<li>外键：外键用于关联两个表。</li>
+<li>复合键：复合键（组合键）将多个列作为一个索引键，一般用于复合索引。</li>
+<li>索引：使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。</li>
+<li>参照完整性: 参照的完整性要求关系中不允许引用不存在的实体。与实体完整性是关系模型必须满足的完整性约束条件，目的是保证数据的一致性。</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>MAMP中的mysql密码（默认root - root）和自行安装的mysql密码不同。</li>
+<li>MySQL 的SQL语句以分号 (;) 作为结束标识。</li>
+</ul>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/24</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/23</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Burpsuite">Burpsuite</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL">SQL</a>
     
 </div>
             
@@ -731,7 +735,7 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">NEXT &gt;</a>
+        <a class="extend prev" rel="prev" href="/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
     </nav>
     
 </main>
@@ -1060,39 +1064,9 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 22
+        Total : 20
         </div>
         <!-- search  -->
         
@@ -1198,17 +1172,7 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/BurpSuite-localhost-data/" >BurpSuite无法抓取本地包的解决方案</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >MySQL学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >HTTP协议学习笔记</a>
         </li>
     
     
@@ -1231,8 +1195,6 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
         <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
-        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
-    
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
@@ -1245,13 +1207,13 @@ roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选�
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
-        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
-    
-        <span class="sidebar-tag-name" data-tags="上传漏洞"><span class="iconfont-archer">&#xe606;</span>上传漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
     
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
         <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
+    
+        <span class="sidebar-tag-name" data-tags="上传漏洞"><span class="iconfont-archer">&#xe606;</span>上传漏洞</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

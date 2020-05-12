@@ -28,7 +28,7 @@
 <meta property="og:description" content="Spider网站爬行顺序：Proxy抓取请求 -&gt; 发送到Repeater -&gt; 发送到Spider -&gt; 开始爬取网站 -&gt; 在Target中可查看结果。 爬行网站线程数可以设置为2-10，大型网站可以更多。 Scanner漏洞扫描，在扫描之前需要做一个Spider。 roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选择">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-25T11:38:24.000Z">
-<meta property="article:modified_time" content="2020-04-25T22:46:44.852Z">
+<meta property="article:modified_time" content="2020-05-12T21:57:58.916Z">
 <meta property="article:author" content="Yi">
 <meta property="article:tag" content="Web安全">
 <meta property="article:tag" content="BurpSuite">
@@ -300,7 +300,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">137</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">291</span>Reading time: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -421,6 +421,13 @@ height:50vh;
 <p>爬行网站线程数可以设置为2-10，大型网站可以更多。</p>
 <h2 id="Scanner"><a href="#Scanner" class="headerlink" title="Scanner"></a>Scanner</h2><p>漏洞扫描，在扫描之前需要做一个Spider。</p>
 <p>roxy抓取请求 -&gt; Spider爬行 -&gt; 在Target标签下的Sitemap中，选择Active scan this host -&gt; Do an active scan。</p>
+<h2 id="BurpSuite无法抓取本地包的解决方案"><a href="#BurpSuite无法抓取本地包的解决方案" class="headerlink" title="BurpSuite无法抓取本地包的解决方案"></a>BurpSuite无法抓取本地包的解决方案</h2><p>本地电脑系统是Mac OS Catalina 10.15.4，用Chrome、火狐都不能抓部署在本地的网站的包，可能是本机系统有设置代理时过滤”127.0.0.1”和”localhost”。</p>
+<p>解决方案：</p>
+<ol>
+<li>确保配置浏览器代理时，去掉勾选”过滤本机IP地址“选项。</li>
+<li>可以使用本机IP（192.168.xxx.xxx）代替“127.0.0.1”访问页面。</li>
+<li>另一种方法：可以修改本地hosts文件，将本机IP指向“127.0.0.1”或者绑定一个域名到“127.0.0.1”也可以解决。</li>
+</ol>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.cnblzogs.com/Icey-Blog/articles/7513303.html" target="_blank" rel="noopener">burp suite超级详解</a><br><a href="https://www.cnblogs.com/pshell/p/7979653.html" target="_blank" rel="noopener">Burp Suite渗透操作指南–暴力破解</a><br><a href="https://www.cnblogs.com/pshell/p/7979649.html" target="_blank" rel="noopener">Burp Suite渗透实战操作指南-上篇</a></p>
 
     </article>
@@ -430,7 +437,7 @@ height:50vh;
             <p>Author: <a href="http://fecee.github.io">Yi</a>
             <p>Article Link:: <a href="http://fecee.github.io/2020/04/25/Burpsuite-notes/">http://fecee.github.io/2020/04/25/Burpsuite-notes/</a>
             <p>Publication Date: <a href="http://fecee.github.io/2020/04/25/Burpsuite-notes/">April 25th 2020, 7:38:24 am</a>
-            <p>Last Update: <a href="http://fecee.github.io/2020/04/25/Burpsuite-notes/">April 25th 2020, 6:46:44 pm</a>
+            <p>Last Update: <a href="http://fecee.github.io/2020/04/25/Burpsuite-notes/">May 12th 2020, 5:57:58 pm</a>
             <p>Copyright Notice: With the exception of the special statement at the beginning of the article, all articles can be reprinted in accordance with the <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0 agreement</a> with the author's permission.</p>
         </div>
     
@@ -529,7 +536,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spider"><span class="toc-number">1.</span> <span class="toc-text">Spider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scanner"><span class="toc-number">2.</span> <span class="toc-text">Scanner</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">3.</span> <span class="toc-text">参考资料</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spider"><span class="toc-number">1.</span> <span class="toc-text">Spider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scanner"><span class="toc-number">2.</span> <span class="toc-text">Scanner</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BurpSuite无法抓取本地包的解决方案"><span class="toc-number">3.</span> <span class="toc-text">BurpSuite无法抓取本地包的解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -774,39 +781,9 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 22
+        Total : 20
         </div>
         <!-- search  -->
         
@@ -912,17 +889,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/BurpSuite-localhost-data/" >BurpSuite无法抓取本地包的解决方案</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >MySQL学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2020/04/22/HTTP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >HTTP协议学习笔记</a>
         </li>
     
     
@@ -945,8 +912,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
-        <span class="sidebar-tag-name" data-tags="Burpsuite"><span class="iconfont-archer">&#xe606;</span>Burpsuite</span>
-    
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
@@ -959,13 +924,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
-        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
-    
-        <span class="sidebar-tag-name" data-tags="上传漏洞"><span class="iconfont-archer">&#xe606;</span>上传漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
     
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
         <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
+    
+        <span class="sidebar-tag-name" data-tags="上传漏洞"><span class="iconfont-archer">&#xe606;</span>上传漏洞</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
