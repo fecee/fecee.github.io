@@ -399,127 +399,23 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/29/SQL-TimeBased-Blind/" >
+        <a class="abstract-title" href = "/2020/04/28/MySQL-Injec-Notes/" >
             
-                <span>基于Sqli-Labs的SQL时间盲注学习笔记</span>
+                <span>MySQL注入学习笔记</span>
         </a>
         <div class="abstract-content">
-            <h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>当页面完全没有回显时用时间盲注。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/29/SQL-Bool-Blind/" >
-            
-                <span>基于DVWA的SQL布尔盲注学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="布尔盲注适用范围"><a href="#布尔盲注适用范围" class="headerlink" title="布尔盲注适用范围"></a>布尔盲注适用范围</h2><p>在联合查询和报错注入都不适用的情况下，考虑的一种手工注入方式。</p>
-<p>优点：遍历的方法可以准确查出数据。<br>缺点：过程繁琐。</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/28/ErrorBased-SQL-Notes/" >
-            
-                <span>MySQL报错注入学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="报错注入原理"><a href="#报错注入原理" class="headerlink" title="报错注入原理"></a>报错注入原理</h2><p>报错注入用于没有显位的SQL注入，可以用来替代盲注。</p>
+            <h2 id="MySQL注入分类"><a href="#MySQL注入分类" class="headerlink" title="MySQL注入分类"></a>MySQL注入分类</h2><p>Sql 注入攻击是通过将恶意的 Sql 查询或添加语句插入到应用的输入参数中，再在后台Sql 服务器上解析执行进行的攻 击，它目前黑客对数据库进行攻击的最常用手段之一。</p>
+<ol>
+<li>联合查询注入</li>
+<li>报错注入</li>
+<li>布尔型盲注</li>
+<li>时间盲注</li>
+</ol>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Web安全">Web安全</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SQL注入">SQL注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/DVWA-SQL-Notes/" >
-            
-                <span>基于DVWA的SQL联合查询注入学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="联合查询注入基本流程"><a href="#联合查询注入基本流程" class="headerlink" title="联合查询注入基本流程"></a>联合查询注入基本流程</h2><ol>
-<li><p>判断是否存在注入（数字型还是字符型）</p>
-<ol>
-<li><p>单引号法：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>逻辑法：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">and 1=1</span><br><span class="line">and 1=2</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>1</span><br><span class="line">1<span class="string">' and '</span>1<span class="string">'='</span>2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>运算法</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-1</span><br><span class="line">-0</span><br></pre></td></tr></table></figure>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
             </div>
             <!-- tags  -->
             
@@ -847,54 +743,9 @@ BurpSuite无法抓取本地包的解决方案本地电脑系统是Mac OS Catalin
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 20
+        Total : 17
         </div>
         <!-- search  -->
         
@@ -970,22 +821,7 @@ BurpSuite无法抓取本地包的解决方案本地电脑系统是Mac OS Catalin
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-TimeBased-Blind/" >基于Sqli-Labs的SQL时间盲注学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/SQL-Bool-Blind/" >基于DVWA的SQL布尔盲注学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2020/04/28/ErrorBased-SQL-Notes/" >MySQL报错注入学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/DVWA-SQL-Notes/" >基于DVWA的SQL联合查询注入学习笔记</a>
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2020/04/28/MySQL-Injec-Notes/" >MySQL注入学习笔记</a>
         </li>
     
     
@@ -1021,25 +857,25 @@ BurpSuite无法抓取本地包的解决方案本地电脑系统是Mac OS Catalin
     
         <span class="sidebar-tag-name" data-tags="Web安全"><span class="iconfont-archer">&#xe606;</span>Web安全</span>
     
-        <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
-    
-        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+        <span class="sidebar-tag-name" data-tags="目录扫描"><span class="iconfont-archer">&#xe606;</span>目录扫描</span>
     
         <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
-        <span class="sidebar-tag-name" data-tags="目录扫描"><span class="iconfont-archer">&#xe606;</span>目录扫描</span>
+        <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
         <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
-        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
-        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="上传漏洞"><span class="iconfont-archer">&#xe606;</span>上传漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
     
         <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
     
@@ -1082,11 +918,11 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Web安全/SQL注入"><span class="iconfont-archer">&#xe60a;</span>Web安全/SQL注入</span>
     
-        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
-    
         <span class="sidebar-category-name" data-categories="Web安全/CTF"><span class="iconfont-archer">&#xe60a;</span>Web安全/CTF</span>
     
         <span class="sidebar-category-name" data-categories="Web安全/上传漏洞"><span class="iconfont-archer">&#xe60a;</span>Web安全/上传漏洞</span>
+    
+        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
