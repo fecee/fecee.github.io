@@ -374,9 +374,17 @@
             <h2 id="口令爆破"><a href="#口令爆破" class="headerlink" title="口令爆破"></a>口令爆破</h2><p>在利用Burpsuite进行对PHPmyadmin的登录密码的爆破时，发现针对高版本的PHPmyadmin（我现在测试的是4.8.5版本），登录方式变成了session，同时需要验证token登录，用简单的Burpsuite Intruder功能无法进行爆破。</p>
 <p>网上找了集中解决方案：</p>
 <ol>
-<li>用PHPmyadmin爆破工具<br>不开源，不一定安全</li>
-<li>Python脚本<br>功能简单，但是实现多线程比较麻烦</li>
-<li>国外论坛中的解决方案，利用宏（Macro）设置Burpsuite进行爆破<br>过程稍微复杂，但是配合Burpsuite灵活设置，我认为这个方法在实战中比较灵活</li>
+<li><p>用PHPmyadmin爆破工具<br>不开源，不一定安全</p>
+</li>
+<li><p>Python脚本<br>功能简单，但是实现多线程比较麻烦</p>
+</li>
+<li><p>国外论坛中的解决方案，利用宏（Macro）设置Burpsuite进行爆破<br>过程稍微复杂，但是配合Burpsuite灵活设置，我认为这个方法在实战中比较灵活</p>
+</li>
+<li><p>关闭令牌检查:<br>在<code>libraries/common.inc.php</code>中禁用令牌</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$token_mismatch=<span class="keyword">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>要是能关闭，我还爆破干什么…</p>
+</li>
 </ol>
 <p>本文主要介绍基于宏(Macro)的Burpsuite爆破方法。</p>
         </div>
@@ -489,10 +497,6 @@ BurpSuite无法抓取本地包的解决方案本地电脑系统是Mac OS Catalin
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
     
     
     
@@ -852,17 +856,19 @@ BurpSuite无法抓取本地包的解决方案本地电脑系统是Mac OS Catalin
     
         <span class="sidebar-tag-name" data-tags="CMS"><span class="iconfont-archer">&#xe606;</span>CMS</span>
     
-        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
-    
         <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
     
         <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="phpmyadmin"><span class="iconfont-archer">&#xe606;</span>phpmyadmin</span>
     
         <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
     
@@ -873,8 +879,6 @@ BurpSuite无法抓取本地包的解决方案本地电脑系统是Mac OS Catalin
         <span class="sidebar-tag-name" data-tags="Webshell"><span class="iconfont-archer">&#xe606;</span>Webshell</span>
     
         <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
-    
-        <span class="sidebar-tag-name" data-tags="phpmyadmin"><span class="iconfont-archer">&#xe606;</span>phpmyadmin</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
