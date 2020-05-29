@@ -371,7 +371,11 @@
                 <span>基于Phpmyadmin渗透测试笔记</span>
         </a>
         <div class="abstract-content">
-            <h2 id="口令爆破"><a href="#口令爆破" class="headerlink" title="口令爆破"></a>口令爆破</h2><p>在利用Burpsuite进行对PHPmyadmin的登录密码的爆破时，发现针对高版本的PHPmyadmin（我现在测试的是4.8.5版本），登录方式变成了session，同时需要验证token登录，用简单的Burpsuite Intruder功能无法进行爆破。</p>
+            <h2 id="口令爆破"><a href="#口令爆破" class="headerlink" title="口令爆破"></a>口令爆破</h2><h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>在利用Burpsuite进行对PHPmyadmin的登录密码的爆破时，发现针对不同版本的PHPMyadmin:</p>
+<ul>
+<li><strong>高版本的PHPmyadmin</strong>（我现在测试的是4.8.5版本），登录方式变成了session，同时需要验证token登录，用简单的Burpsuite Intruder功能无法进行爆破。</li>
+<li><strong>低版本的PHPMyadmin</strong> (在PHPStudy中测试)中，登录方式没有session，然而依然需要验证token，如果不单独设置token，爆破结果就会出现所有结果都是<strong>302</strong>跳转，这里需要注意。</li>
+</ul>
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -482,10 +486,6 @@ BurpSuite无法抓取本地包的解决方案本地电脑系统是Mac OS Catalin
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
     
     
     
@@ -841,31 +841,31 @@ BurpSuite无法抓取本地包的解决方案本地电脑系统是Mac OS Catalin
     
         <span class="sidebar-tag-name" data-tags="CMS"><span class="iconfont-archer">&#xe606;</span>CMS</span>
     
-        <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
-    
-        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
-    
         <span class="sidebar-tag-name" data-tags="BurpSuite"><span class="iconfont-archer">&#xe606;</span>BurpSuite</span>
     
         <span class="sidebar-tag-name" data-tags="目录扫描"><span class="iconfont-archer">&#xe606;</span>目录扫描</span>
     
+        <span class="sidebar-tag-name" data-tags="SQL注入"><span class="iconfont-archer">&#xe606;</span>SQL注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="MSSQL"><span class="iconfont-archer">&#xe606;</span>MSSQL</span>
+    
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
-        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
     
         <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
         <span class="sidebar-tag-name" data-tags="phpmyadmin"><span class="iconfont-archer">&#xe606;</span>phpmyadmin</span>
     
-        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
+        <span class="sidebar-tag-name" data-tags="SQL"><span class="iconfont-archer">&#xe606;</span>SQL</span>
     
-        <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
+        <span class="sidebar-tag-name" data-tags="Web基础"><span class="iconfont-archer">&#xe606;</span>Web基础</span>
     
         <span class="sidebar-tag-name" data-tags="上传漏洞"><span class="iconfont-archer">&#xe606;</span>上传漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="Webshell"><span class="iconfont-archer">&#xe606;</span>Webshell</span>
+    
+        <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -906,9 +906,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Web安全/SQL注入"><span class="iconfont-archer">&#xe60a;</span>Web安全/SQL注入</span>
     
-        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
-    
         <span class="sidebar-category-name" data-categories="Web安全/CTF"><span class="iconfont-archer">&#xe60a;</span>Web安全/CTF</span>
+    
+        <span class="sidebar-category-name" data-categories="Web基础"><span class="iconfont-archer">&#xe60a;</span>Web基础</span>
     
         <span class="sidebar-category-name" data-categories="Web安全/上传漏洞"><span class="iconfont-archer">&#xe60a;</span>Web安全/上传漏洞</span>
     
